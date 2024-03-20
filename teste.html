@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @font-face {
+        font-family: 'poppins';
+        src: url('./font/Poppins-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    body {
+        background-color: antiquewhite;
+        font-family: poppins;
+    }
+
+    .hardSkills {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: solid 2px rgba(62, 72, 65, 0.9);
+        border-radius: 20px;
+    }
+
+    .hardSkills .top {
+        text-align: center;
+    }
+
+    .hardSkills .top h1 {
+        margin: 0;
+        font-size: 3rem;
+    }
+
+    .hardSkills .top p {
+        font-size: 1.2rem;
+    }
+
+    .hardSkills .bot {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        margin: 2rem 0;
+        margin-top: 3.5rem;
+    }
+
+    .hardSkills .skill {
+        width: auto;
+    }
+
+    .hardSkills p {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 800px) {
+        .hardSkills .bot {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+</style>
+
+<body>
+    <section class="hardSkills">
+        <div class="top">
+            <h1>
+                Habilidades
+                <p>Conhecimentos Técnicos</p>
+            </h1>
+        </div>
+        <div class="bot">
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=html" />
+                <p>Avançado</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=css" />
+                <p>Avançado</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=javascript" />
+                <p>Intermediário</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=php" />
+                <p>Intermediário</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=cs" />
+                <p>Intermediário</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=vue" />
+                <p>Intermediário</p>
+            </div>
+            <!--6-->
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=mysql" />
+                <p>Avançado</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=mongodb" />
+                <p>Intermediário</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=github" />
+                <p>Avançado</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=ai" />
+                <p>Intermediário</p>
+            </div>
+            <div class="skill">
+                <img src="https://skillicons.dev/icons?i=ps" />
+                <p>Intermediário</p>
+            </div>
+            <div class="skill">
+                <img alt="Rafa-Vue" width="48px"
+                    src="https://cracklicensekey.org/wp-content/uploads/2022/09/1553188286_coreldraw-graphics-su.png" />
+                <p>Avançado</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
