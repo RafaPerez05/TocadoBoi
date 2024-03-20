@@ -12,6 +12,7 @@
   <link rel="icon" type="image/png" href="imagens/mylogo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-s3QAG/Rg9BYLllDZ7tL0JCUUDvb/W+gJxvh+yMTxOKWpsqmM2axfChazddWJW6WA29oQmbpWzOyjUhQb5tbqWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -36,8 +37,9 @@
 
       <ul class="nav-list">
         <li><a href="index.php">Início</a></li>
-        <li><a href="#projetos">Projetos</a></li>
-        <li><a href="#contato">Contato</a></li>
+        <li><a href="#projetos">Produtos</a></li>
+        <li><a href="#contato"><i class="fa fa-shopping-cart"></i></a></li>
+        <li><a href="#contato"><i class="fa fa-user"></i></a></li>
 
       </ul>
     </nav>
@@ -54,12 +56,12 @@
       </div>
     </section>
 
-<!-- 
+ 
     <section class="sobre" id="sobre">
       <div class="desenho">
       </div>
       <section class="title">
-        <h2>Sobre mim</h2>
+        <h2>Quem nós somos</h2>
         <p>
           <i class="fa-solid fa-check"></i> Estudo Análise e Desenvolvimento de Sistemas na FATEC (Faculdade de
           Tecnologia do Estado de
@@ -84,10 +86,9 @@
           <i class="fa-solid fa-check"></i>Abaixo, você encontrará uma seleção das minhas habilidades e projetos,
           abrangendo tanto o design gráfico quanto a programação.</i>.
         </p>
-        <a href="mailto:rafaelperezsilva2005@gmail.com" target="_blank"><button>Fale comigo</button></a>
       </section>
     </section>
-
+<!--
  
     <section class="hardSkills">
       <div class="top">
@@ -248,23 +249,9 @@
   <footer id="footer">
     <div class="logo">
       <a href="index.php">
-        <img src="imagens/mylogo.png" class="transition-soft">
+        <img src="imagens/mylogo2.png" class="transition-soft">
       </a>
     </div>
-    <section class="myInfo">
-      <div class="redes">
-        <p>Siga minhas redes sociais</p>
-        <a href="https://www.instagram.com/rafaa_per3z/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-instagram" style="color: #ffffff;"></i>
-        </a>
-        <a href="https://github.com/RafaPerez05" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-github" style="color: #ffffff;"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/rafael-perez-8160b3251/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-linkedin" style="color: #ffffff;"></i>
-        </a>
-      </div>
-    </section>
     <p>© 2023 <a href="https://www.instagram.com/rafaa_per3z/">Rafael Perez</a> - Todos os direitos reservados -
       Desenvolvido por mim 💎</p>
   </footer>
