@@ -23,8 +23,8 @@ class BancoDeDados{
     public function inserirProduto($produto){
         
         $conexao = $this->conectarBD();
-        $consulProd= "INSERT INTO produto (nome, fabricante, descricao, valor) 
-                     VALUES ('{$produto->get_Nome()}','{$produto->get_Fabricante()}','{$produto->get_Descricao()}','{$produto->get_Valor()}')";
+        $consulProd= "INSERT INTO produto (nome, fabricante, descricao, valor, imagem_path) 
+                     VALUES ('{$produto->get_Nome()}','{$produto->get_Fabricante()}','{$produto->get_Descricao()}','{$produto->get_Valor()}','{$produto->get_Imagem()}')";
         mysqli_query($conexao,$consulProd);
     }
     

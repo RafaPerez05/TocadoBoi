@@ -1,9 +1,6 @@
 <?php
-    
-    require_once "../controller/Controlador.php";
-?>
-<?php
-  include "layout/cabecalho.php";
+require_once "../controller/Controlador.php";
+include "layout/cabecalho.php";
 ?>
 <main>
         <!-- Modal -->
@@ -12,7 +9,7 @@
         <div class="modal-content">
         <span class="close">&times;</span>
             <section class="conteudo-formulario-cadastro">
-                <form action="../processamento/processamento.php" method="POST">
+                <form action="../processamento/processamento.php" method="POST" enctype="multipart/form-data">
                     <label>Cadastrar Produto</label>
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome</label>
@@ -32,7 +29,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Imagem</label>
-                        <input class="form-control" type="file" id="formFile" name="imagem">
+                        <input class="form-control" type="file" id="formFile" name="inputimagemProd" accept="image/jpeg, image/png" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
@@ -54,6 +51,7 @@
                 <th>Fabricante</th>
                 <th>Descrição</th>
                 <th>Valor</th>
+                <th></th>
                 <th></th>
                 </tr>
             </thead>

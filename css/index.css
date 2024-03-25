@@ -479,46 +479,7 @@ section .corpo {
 }
 
 
-section button {
-  font-family: poppins;
-  background-color: #fff;
-  color: rgba(62, 72, 65, 0.9);
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  overflow: hidden;
-  z-index: 1;
-  position: relative;
-  -webkit-transition: color 150ms ease-in-out;
-  transition: color 150ms ease-in-out;
-  border-color: rgba(62, 72, 65, 0.9);
 
-}
-
-button:after {
-  content: '';
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  width: 0;
-  height: 100%;
-  background: rgba(62, 72, 65, 0.9);
-  z-index: -1;
-  -webkit-transition: width 150ms ease-in-out;
-  transition: width 150ms ease-in-out;
-}
-
-button:hover {
-  color: #fff;
-}
-
-button:hover:after {
-  width: 110%;
-}
 
 .drinks {
   display: flex;

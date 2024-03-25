@@ -13,9 +13,9 @@ class Controlador{
         $this->bancoDeDados = new BancoDeDados("localhost","root","","toca");
     }
 
-    public function cadastrarProduto($nome, $fabricante, $descricao, $valor){
+    public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem){
 
-        $produto = new Produto($nome,$fabricante,$descricao,$valor);
+        $produto = new Produto($nome,$fabricante,$descricao,$valor,$imagem);
         $this->bancoDeDados->inserirProduto($produto);
     }
 
@@ -38,10 +38,14 @@ class Controlador{
                     "<td>".
                         "<form method='post' action='../processamento/processamentoExcluirProduto.php'>".
                             "<input type='hidden' name='cod' value='". $produto["cod"] ."'>".
-                            "<button type='submit' name='excluir_produto'>Excluir</button>". // Botão para excluir
+                            "<button class='btn btn-danger' type='submit' name='excluir_produto'>Excluir</button>". // Botão para excluir
                         "</form>".
                     "</td>".
                     "<td>".
+                    "<form method='post' action='../processamento/processamentoAlterarProduto.php'>".
+                        "<input type='hidden' name='cod' value='". $produto["cod"] ."'>".
+                        "<button class='btn btn-warning' type='submit' name='excluir_produto'>Alterar</button>". // Botão para alterar
+                    "</form>".
                     "</td>".
                 "</tr>".
                 "</tbody>";
