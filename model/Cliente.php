@@ -11,9 +11,9 @@ class Cliente{
     protected $email;
     protected $senha;
 
-    public function __construct($Nome, $sobrenome, $Cpf, $datanasc, $telefone, $email, $senha)
+    public function __construct($nome, $sobrenome, $Cpf, $datanasc, $telefone, $email, $senha)
     {
-        $this->nome = $Nome;
+        $this->nome = $nome;
         $this->sobrenome = $sobrenome;
         $this->cpf = $Cpf;
         $this->datanasc = $datanasc;
@@ -26,8 +26,8 @@ class Cliente{
         return($this->nome);
     }
 
-    public function set_nome($Nome){
-        $this->nome = $Nome;
+    public function set_nome($nome){
+        $this->nome = $nome;
     }
 
     

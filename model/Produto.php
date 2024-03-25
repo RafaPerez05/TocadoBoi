@@ -50,9 +50,6 @@ class Produto{
     }
 
     //Métodos
-    public function aplicarCupom($cupomTaxa){
-        $valorDesconto = ($this->valor*$cupomTaxa) / 100;
-        $this->valor = $this->valor - $valorDesconto;
-    }
+    
 }
 ?>
