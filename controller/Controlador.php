@@ -107,6 +107,40 @@ class Controlador{
         }
         return $prod;
     }
+    public function visualizarProdutosMasc(){
+        $prod="";
+        $listaProdutos = $this->bancoDeDados->retornarProdutosSexoM();
+        while($produto = mysqli_fetch_assoc($listaProdutos)){
+            $prod .=
+            "<div class='col-lg-4 col-md-6'>".
+                "<div class='product-card'>".
+                    "<img src='". $produto["imagem_path"] ."'alt='Product Image' class='product-image'>".
+                    "<div class='product-name'>".$produto["nome"]."</div>".
+                    "<div class='product-description'>". $produto["descricao"] ."</div>".
+                    "<div class='product-price'>R$". $produto["valor"] ."</div>".
+                    "<button class='btn btn-warning btn-add-to-cart'>Adicionar ao Carrinho</button>".
+                "</div>".
+            "</div>";
+        }
+        return $prod;
+    }
+    public function visualizarProdutosFem(){
+        $prod="";
+        $listaProdutos = $this->bancoDeDados->retornarProdutosSexoF();
+        while($produto = mysqli_fetch_assoc($listaProdutos)){
+            $prod .=
+            "<div class='col-lg-4 col-md-6'>".
+                "<div class='product-card'>".
+                    "<img src='". $produto["imagem_path"] ."'alt='Product Image' class='product-image'>".
+                    "<div class='product-name'>".$produto["nome"]."</div>".
+                    "<div class='product-description'>". $produto["descricao"] ."</div>".
+                    "<div class='product-price'>R$". $produto["valor"] ."</div>".
+                    "<button class='btn btn-warning btn-add-to-cart'>Adicionar ao Carrinho</button>".
+                "</div>".
+            "</div>";
+        }
+        return $prod;
+    }
 
 
 

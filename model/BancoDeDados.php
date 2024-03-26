@@ -64,6 +64,12 @@ class BancoDeDados{
         $Produto = mysqli_query($conexao,$consulProd);
         return $Produto;
     }
+    public function retornarProdutosSexoF(){
+        $conexao = $this->conectarBD();
+        $consulProd = "SELECT * FROM produto WHERE sexo = 'Feminino'";
+        $Produto = mysqli_query($conexao,$consulProd);
+        return $Produto;
+    }
 
     public function excluirProdutos($cod){
         $conexao = $this->conectarBD();
