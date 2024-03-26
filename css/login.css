@@ -1,0 +1,58 @@
+body {
+    background-color: rgba(245, 240, 229, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.conteudo-login {
+    text-align: center;
+}
+
+.conteudo-formulario {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: auto;
+}
+
+#form-log {
+    margin-bottom: 20px;
+}
+
+#input-log {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+#botao-log {
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgba(83, 156, 82, 1);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.rodape-login {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(245, 240, 229, 1);
+    text-align: center;
+    padding: 10px 0;
+    font-size: 12px;
+}

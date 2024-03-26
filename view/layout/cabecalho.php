@@ -22,7 +22,7 @@
 <header class="cabeça">
     <nav>
       <div class="logo">
-        <a href="index.php">
+        <a href="home.php">
           <img src="../imagens/mylogo.png" class="logo-img transition-soft">
         </a>
       </div>
