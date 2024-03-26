@@ -8,14 +8,16 @@ class Produto{
     protected $descricao;
     protected $valor;
     protected $imagem;
+    protected $sexo;
 
     //Construtor
-    public function __construct($Nome,$Fabricante,$Descricao,$Valor,$Imagem){
+    public function __construct($Nome,$Fabricante,$Descricao,$Valor,$Imagem,$Sexo){
         $this->nome = $Nome;
         $this->fabricante = $Fabricante;
         $this->descricao = $Descricao;
         $this->valor = $Valor;
         $this->imagem = $Imagem;
+        $this->sexo = $Sexo;
     }
 
     //Getter e Setter
@@ -57,6 +59,14 @@ class Produto{
 
     public function set_Imagem($Imagem){
         $this->imagem = $Imagem;
+    }
+
+    public function get_Sexo(){
+        return($this->sexo);
+    }
+
+    public function set_Sexo($Sexo){
+        $this->sexo = $Sexo;
     }
 
     //Métodos

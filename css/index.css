@@ -26,12 +26,6 @@
 }
 
 
-body {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  background-color: rgba(245, 240, 229, 1);
-
-}
 
 #loader-wrapper {
   width: 100%;
@@ -161,6 +155,7 @@ nav {
   height: 10vh;
   opacity: 0.9;
   position: fixed;
+  z-index: 1000;
 
 }
 
@@ -191,6 +186,11 @@ nav .logo{
   nav .mobile-menu {
     margin-right: 3rem;
   }
+  nav a {
+    color: rgba(72, 34, 2, 1);
+    text-decoration: none;
+    font-size: 2rem;
+  }
 }
 
 nav ul {
@@ -204,13 +204,15 @@ nav ul {
 nav a {
   color: rgba(72, 34, 2, 1);
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
   margin-right: 3rem;
+  position: relative;
+  z-index: 1001;
 }
 
 .nav-list li {
@@ -233,9 +235,7 @@ nav a {
 }
 
 @media (max-width: 999px) {
-  body {
-    overflow-x: hidden;
-  }
+
 
   .nav-list {
     margin: 0;
@@ -250,7 +250,7 @@ nav a {
     justify-content: space-around;
     transform: translateX(100%);
     transition: transform 0.3s ease-in;
-    z-index: 2;
+    z-index: 1;
   }
 
   .nav-list li {
@@ -291,12 +291,7 @@ nav a {
   transform: rotate(45deg) translate(-5px, -7px);
 }
 
-main {
-  margin: 0 auto;
-  padding: 0;
-  background-position: center;
-  height: 100%;
-}
+
 
 .slideshow:nth-of-type(1) {
   background-image: url("../imagens/branco.jpg");
@@ -349,26 +344,23 @@ main {
 
 @media (max-width: 999px) {
   .direita h1 {
-    font-size: 2rem;
+    font-size: 8rem;
   }
   .direita h2 {
-    font-size: 1rem;
+    font-size: 3rem;
+  }
+  .direita p {
+    font-size: 5rem;
   }
 }
 
 .direita p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 2rem;
   font-family: poppins;
   text-align: center;
   max-width: 1200px;
 
-}
-
-@media (min-width: 999px) {
-  .direita p {
-    font-size: 1.5rem;
-  }
 }
 
 
@@ -381,32 +373,6 @@ main {
   }
 }
 
-section .corpo {
-  position: relative;
-  height: auto;
-  width: 100%;
-}
-
-.sobre{
-  display: flex;
-  width: 100%;
-  height: auto;
-  color: rgb(62, 72, 65);;
-  font-family: poppins;
-  padding: 20px;
-}
-
-.sobre .desenho{
-  width: 800px;
-  height: 500px;
-  margin: 1.5rem;
-  margin-bottom: 0;
-  object-fit: cover;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url('../imagens/personagem.png');
-}
 
 .title {
   display: flex;
@@ -417,23 +383,6 @@ section .corpo {
   margin-top: 0;
 }
 
-@media (max-width: 999px) {
-  .title {
-    margin-top: 0;
-  }
-  title h2{
-    font-size: 2rem;
-  }
-  .sobre{
-    justify-content:center;
-    align-items: center;
-    flex-direction: column;
-  }
-  .sobre .desenho{
-    width: 400px;
-    height: 400px;
-  }
-}
 
 .title h2 {
   font-weight: bold;
@@ -489,16 +438,16 @@ section .corpo {
 }
 
 .drinks h1 {
-  font-size: 2rem;
+  font-size: 5rem;
   font-weight: normal;
-  font-family: poppins;
+  font-family: toca;
   margin-top: 3rem;
-  color: rgba(62, 72, 65, 0.9);
+  color: white;
 }
 
 @media (min-width: 999px) {
   .drinks h1 {
-    font-size: 3rem;
+    font-size: 8rem;
   }
 }
 
@@ -538,6 +487,7 @@ section .corpo {
   height: 300px; /* Ajustando a altura para ocupar todo o espaço disponível */
   object-fit: cover; /* Para manter a proporção da imagem */
   transition: filter 0.5s ease;
+  z-index: 1;
 }
 
 .square .overlay {
@@ -576,45 +526,6 @@ section .corpo {
   font-size: 1rem; /* Reduzindo o tamanho do texto */
 }
 
-.square button {
-  font-family: poppins;
-  background-color: rgb(62, 72, 65);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1rem; /* Reduzindo o tamanho do texto do botão */
-  cursor: pointer;
-  overflow: hidden;
-  transition: color 150ms ease-in-out;
-  border-color: rgb(62, 72, 65);
-  position: relative;
-  z-index: 1;
-  opacity: 0.9;
-  margin-top: 1rem; /* Reduzindo o espaçamento do topo */
-}
-
-.square button:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 100%;
-  background: #fff;
-  transition: width 150ms ease-in-out;
-  z-index: -1;
-}
-
-.square button:hover {
-  color: #522a42;
-  border-color: #fff;
-}
-
-.square button:hover:after {
-  width: 110%;
-}
 
 
 

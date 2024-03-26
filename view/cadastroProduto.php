@@ -31,6 +31,14 @@ include "layout/cabecalho.php";
                         <label for="formFile" class="form-label">Imagem</label>
                         <input class="form-control" type="file" id="formFile" name="inputimagemProd" accept="image/jpeg, image/png" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="valor" class="form-label">Sexo</label>
+                        <select class="form-select" name="inputSexoProd">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                        </select>
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </form>
             </section>
@@ -54,7 +62,7 @@ include "layout/cabecalho.php";
             <h1>Produtos</h1>
         </section>
             <h3>Gerenciamento de Produtos</h3>
-            <a id="openModal" class="btn btn-primary mb-3">Cadastrar novo produto</a>
+            <a class="btn btn-primary mb-3 openModal">Cadastrar novo produto</a>
 
             <table class="table table-striped zebrado">
             <thead>
@@ -64,6 +72,7 @@ include "layout/cabecalho.php";
                 <th>Fabricante</th>
                 <th>Descrição</th>
                 <th>Valor</th>
+                <th>Sexo</th>
                 <th></th>
                 <th></th>
                 </tr>
@@ -79,13 +88,15 @@ include "layout/cabecalho.php";
 <script>
     //MODAL CADASTRO
     var modalCad = document.getElementById("myModal");
-    var btnModalCad = document.getElementById("openModal");
+    var btnsModalCad = document.querySelectorAll(".openModal");
     var spanCad = document.getElementsByClassName("close")[0];
 
-    // Quando o usuário clicar no botão "Novo", abrir o modal de cadastro
-    btnModalCad.onclick = function() {
-        modalCad.style.display = "block";
-    }
+    // Para cada botão de cadastro, adicionar um evento de clique para abrir o modal
+    btnsModalCad.forEach(function(btn) {
+        btn.onclick = function() {
+            modalCad.style.display = "block";
+        }
+    });
 
     // Quando o usuário clicar no botão de fechar (para o modal de cadastro), fechar o modal
     spanCad.onclick = function() {
@@ -94,13 +105,15 @@ include "layout/cabecalho.php";
 
     //MODAL ALTERAR
     var modalAlt = document.getElementById("myModalAlterar");
-    var btnModalAlt = document.getElementById("openModalAlterar");
+    var btnsModalAlt = document.querySelectorAll(".openModalAlterar");
     var spanAlt = document.getElementsByClassName("close")[1]; // Use [1] para obter o segundo elemento com a classe "close"
 
-    // Quando o usuário clicar no botão "Alterar", abrir o modal de alteração
-    btnModalAlt.onclick = function() {
-        modalAlt.style.display = "block";
-    }
+    // Para cada botão de alteração, adicionar um evento de clique para abrir o modal de alteração
+    btnsModalAlt.forEach(function(btn) {
+        btn.onclick = function() {
+            modalAlt.style.display = "block";
+        }
+    });
 
     // Quando o usuário clicar no botão de fechar (para o modal de alteração), fechar o modal
     spanAlt.onclick = function() {
@@ -116,6 +129,7 @@ include "layout/cabecalho.php";
         }
     }
 </script>
+
 <?php
   include "layout/rodape.php";
 ?>

@@ -3,27 +3,33 @@
   include "layout/cabecalho.php";
 ?>
 
-    <section>
     <div class="container">
       <div class="square design">
         <img src="../imagens/homem.png" alt="Imagem">
         <div class="overlay">
-          <h2>Flyer Promocional</h2>
-          <p>flyer criado para uma cafeteria fictícia.</p>
-          <!--FUTURO BOTÃO PARA ESPECIFICAÇÕES DO PROJETO-->
-          <!-- <a href="html/bebida1.html"><button id="receita">Saiba mais</button></a> -->
+          <h2>Produtos Masculinos</h2>
+          <p>Clique para ver produtos para Cowboys</p>
         </div>
       </div>
       <div class="square design">
         <img src="../imagens/mulher.png" alt="Imagem">
         <div class="overlay">
-          <h2>Convite de Aniversário</h2>
-          <p>Flyer para enviar aos convidados de uma festa country.</p>
+          <h2>Produtos Femininos</h2>
+          <p>Clique para ver mais sobre produtos para Cowgirls</p>
         </div>
       </div>
       </div>
     </div>
-    </section>
+
+    <div class="container">
+        <div class="row">
+            <?php
+                $controlador = new Controlador();
+                echo $controlador->visualizarProdutosGrid();
+            ?>
+            <!-- Adicione mais produtos conforme necessário -->
+        </div>
+    </div>
 
 <?php
   include "layout/rodape.php";

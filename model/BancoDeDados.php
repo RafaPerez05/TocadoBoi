@@ -23,8 +23,8 @@ class BancoDeDados{
     public function inserirProduto($produto){
         
         $conexao = $this->conectarBD();
-        $consulProd= "INSERT INTO produto (nome, fabricante, descricao, valor, imagem_path) 
-                     VALUES ('{$produto->get_Nome()}','{$produto->get_Fabricante()}','{$produto->get_Descricao()}','{$produto->get_Valor()}','{$produto->get_Imagem()}')";
+        $consulProd= "INSERT INTO produto (nome, fabricante, descricao, valor, imagem_path, sexo) 
+                     VALUES ('{$produto->get_Nome()}','{$produto->get_Fabricante()}','{$produto->get_Descricao()}','{$produto->get_Valor()}','{$produto->get_Imagem()}','{$produto->get_Sexo()}')";
         mysqli_query($conexao,$consulProd);
     }
     
@@ -54,6 +54,13 @@ class BancoDeDados{
     public function retornarProdutosCod($cod){
         $conexao = $this->conectarBD();
         $consulProd = "SELECT * FROM produto WHERE cod = $cod";
+        $Produto = mysqli_query($conexao,$consulProd);
+        return $Produto;
+    }
+
+    public function retornarProdutosSexoM(){
+        $conexao = $this->conectarBD();
+        $consulProd = "SELECT * FROM produto WHERE sexo = 'Masculino'";
         $Produto = mysqli_query($conexao,$consulProd);
         return $Produto;
     }

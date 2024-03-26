@@ -13,9 +13,9 @@ class Controlador{
         $this->bancoDeDados = new BancoDeDados("localhost","root","","toca");
     }
 
-    public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem){
+    public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem, $sexo){
 
-        $produto = new Produto($nome,$fabricante,$descricao,$valor,$imagem);
+        $produto = new Produto($nome,$fabricante,$descricao,$valor,$imagem,$sexo);
         $this->bancoDeDados->inserirProduto($produto);
     }
 
@@ -35,6 +35,7 @@ class Controlador{
                     "<td>". $produto["fabricante"] ."</td>".
                     "<td>". $produto["descricao"] ."</td>".
                     "<td>". $produto["valor"] ."</td>".
+                    "<td>". $produto["sexo"] ."</td>".
                     "<td>".
                         "<form method='post' action='../processamento/processamentoExcluirProduto.php'>".
                             "<input type='hidden' name='cod' value='". $produto["cod"] ."'>".
@@ -42,7 +43,7 @@ class Controlador{
                         "</form>".
                     "</td>".
                     "<td>".
-                    "<a id='openModalAlterar' class='btn btn-warning' name='alterar_produto'>Alterar</a>".
+                    "<a class='btn btn-warning openModalAlterar' name='alterar_produto'>Alterar</a>".
                     "</td>".
                 "</tr>".
                 "</tbody>";
@@ -51,7 +52,7 @@ class Controlador{
     }
     public function visualizarProdutosModal(){
         $prod="";
-        $listaProdutos = $this->bancoDeDados->retornarProdutos();
+        $listaProdutos = $this->bancoDeDados->retornarProdutosCod(17);
         while($produto = mysqli_fetch_assoc($listaProdutos)){
             $prod .=
             "<section class='conteudo-formulario-cadastro'>\n" .
@@ -86,6 +87,23 @@ class Controlador{
             "        <button type='submit' class='btn btn-primary'>Cadastrar</button>\n" .
             "    </form>\n" .
             "</section>\n";
+        }
+        return $prod;
+    }
+    public function visualizarProdutosGrid(){
+        $prod="";
+        $listaProdutos = $this->bancoDeDados->retornarProdutos();
+        while($produto = mysqli_fetch_assoc($listaProdutos)){
+            $prod .=
+            "<div class='col-lg-4 col-md-6'>".
+                "<div class='product-card'>".
+                    "<img src='". $produto["imagem_path"] ."'alt='Product Image' class='product-image'>".
+                    "<div class='product-name'>".$produto["nome"]."</div>".
+                    "<div class='product-description'>". $produto["descricao"] ."</div>".
+                    "<div class='product-price'>R$". $produto["valor"] ."</div>".
+                    "<button class='btn btn-warning btn-add-to-cart'>Adicionar ao Carrinho</button>".
+                "</div>".
+            "</div>";
         }
         return $prod;
     }
