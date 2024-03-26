@@ -51,6 +51,12 @@ class BancoDeDados{
         $listaProdutos = mysqli_query($conexao,$consulProd);
         return $listaProdutos;
     }
+    public function retornarProdutosCod($cod){
+        $conexao = $this->conectarBD();
+        $consulProd = "SELECT * FROM produto WHERE cod = $cod";
+        $Produto = mysqli_query($conexao,$consulProd);
+        return $Produto;
+    }
 
     public function excluirProdutos($cod){
         $conexao = $this->conectarBD();
