@@ -20,6 +20,29 @@ class BancoDeDados{
         return($conexao);
     }
 
+    public function verificaLoginBD($email,$senha){
+        $conexao = $this->conectarBD();
+        $sql_code = "SELECT * FROM cliente WHERE email = '$email' AND senha = '$senha'";
+        $sql_query = $conexao->query($sql_code) or die("Falha na execução do código SQL: " . $conexao->error);
+        $quantidade = $sql_query->num_rows;
+        if($quantidade == 1){
+            
+            return $usuario = $sql_query->fetch_assoc();
+        }
+        else{
+            $sql_code = "SELECT * FROM funcionario WHERE email = '$email' AND senha = '$senha'";
+            $sql_query = $conexao->query($sql_code) or die("Falha na execução do código SQL: " . $conexao->error);
+            $quantidade = $sql_query->num_rows;
+            if($quantidade == 1){
+                
+                return $usuario = $sql_query->fetch_assoc();
+            }
+            else{
+                return "Falha";
+            }
+    }
+}
+
     public function inserirProduto($produto){
         
         $conexao = $this->conectarBD();

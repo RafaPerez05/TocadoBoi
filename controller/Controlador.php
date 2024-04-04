@@ -13,6 +13,17 @@ class Controlador{
         $this->bancoDeDados = new BancoDeDados("localhost","root","","toca");
     }
 
+    public function verificaLogin($email,$senha){
+        $usuarioLogado = $this->bancoDeDados->verificaLoginBD($email,$senha);
+        if(isset($_SESSION)) {
+            session_start();
+            $_SESSION['cod'] = $usuarioLogado['cod'];
+            $_SESSION['nome'] =$usuarioLogado['nome'];
+            header("Location: ../view/home.php");
+        }
+
+    }
+
     public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem, $sexo){
 
         $produto = new Produto($nome,$fabricante,$descricao,$valor,$imagem,$sexo);

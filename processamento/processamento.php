@@ -7,15 +7,16 @@ require_once("../model/Produto.php");
 $controlador = new Controlador();
 
 //Login
-if(isset($_POST['inputEmailLog']) && isset($_POST['inputSenhaLog'])){
+if(isset($_POST['inputEmailLog']) 
+&& isset($_POST['inputSenhaLog'])){
 
-    $_SESSION['estaLogado'] = TRUE;
+    //$_SESSION['estaLogado'] = TRUE;
     $email = $_POST['inputEmailLog'];
     $senha = $_POST['inputSenhaLog'];
 
-    //echo "Email: " . $email . "Senha: " . $senha;
-    header('Location:../view/home.php');
+    $controlador->verificaLogin($email, $senha);
     die();
+    
 }
 
 //Cadastro de Cliente
