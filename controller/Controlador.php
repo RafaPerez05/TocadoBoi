@@ -2,6 +2,9 @@
 require_once("../model/BancoDeDados.php");
 require_once("../model/Cliente.php");
 require_once("../model/Produto.php");
+require_once("../model/Carrinho.php");
+require_once("../model/Venda.php");
+
 
 
 class Controlador{
@@ -40,6 +43,32 @@ class Controlador{
 
         
 
+    }
+
+    public function adcionarCarrinho($cliente_cod,$produto_cod,$quantidade){
+        $carrinho = new Carrinho($cliente_cod,$produto_cod,$quantidade);
+        $this->bancoDeDados->inserirCarrinho($carrinho);
+    }
+    public function visualizarProdutosCarrinho(){
+        $prod="";
+        $listaProdutosCarrinho = $this->bancoDeDados->retornarProdutosCarrinho();
+        while($produto = mysqli_fetch_assoc($listaProdutosCarrinho)){
+            $prod .=
+            "<div class='col-lg-4 col-md-6'>".
+            "<div class='product-card'>".
+                "<img src='". $produto["caminho_imagem"] ."' alt='Product Image' class='product-image'>".
+                "<div class='product-name'>".$produto["nome_produto"]."</div>".
+
+                //form
+                "<form class='col-lg-0 col-md-0' action='../processamento/#' method='post'>".
+                    "<input type='number' id='valor' class='product-price' value='". $produto["valor_produto"] ."'readonly style='border: none; background: transparent; outline: none;text-align: center;' readonly>".
+                    "<input id='quantidade' min='1' step='1' type='number'name='quantidade_carrinho' value='". $produto["quantidade"] ."'>".
+                    "<button type='submit' class='btn btn-danger btn-add-to-cart'>Remover do Carrinho <i class='fa fa-shopping-cart'></i></button>". // Botão submit
+                "</form>". // Fecha o formulário
+            "</div>".
+        "</div>";
+        }
+        return $prod;
     }
 
     public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem, $sexo){
@@ -125,14 +154,20 @@ class Controlador{
         while($produto = mysqli_fetch_assoc($listaProdutos)){
             $prod .=
             "<div class='col-lg-4 col-md-6'>".
-                "<div class='product-card'>".
-                    "<img src='". $produto["imagem_path"] ."'alt='Product Image' class='product-image'>".
-                    "<div class='product-name'>".$produto["nome"]."</div>".
-                    "<div class='product-description'>". $produto["descricao"] ."</div>".
-                    "<div class='product-price'>R$". $produto["valor"] ."</div>".
-                    "<button class='btn btn-warning btn-add-to-cart'>Adicionar ao Carrinho</button>".
-                "</div>".
-            "</div>";
+            "<div class='product-card'>".
+                "<img src='". $produto["imagem_path"] ."' alt='Product Image' class='product-image'>".
+                "<div class='product-name'>".$produto["nome"]."</div>".
+                "<div class='product-description'>". $produto["descricao"] ."</div>".
+                "<div class='product-price'>R$". $produto["valor"] ."</div>".
+                "<form action='../processamento/processamentoVendas.php' method='post'>". // Adiciona um formulário ao redor do botão
+                    "<input type='hidden' name='produto_cod' value='". $produto["cod"] ."'>". // Adiciona um campo oculto com o nome do produto
+                    "<input  type='hidden' name='cliente_cod' value='". $_SESSION["cod"] ."'>". // 
+                    "<input type='hidden' name='valor_total' value='". $produto["valor"] ."'>". // Adiciona um campo oculto com o valor total
+                    "<input type='hidden' name='quantidade' value='" . "1" . "'>".
+                    "<button type='submit' class='btn btn-warning btn-add-to-cart'>Adicionar ao Carrinho <i class='fa fa-shopping-cart'></i></button>". // Botão submit
+                "</form>". // Fecha o formulário
+            "</div>".
+        "</div>";
         }
         return $prod;
     }

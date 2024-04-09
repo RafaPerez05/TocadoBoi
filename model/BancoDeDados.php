@@ -37,6 +37,20 @@ class BancoDeDados{
         return [$sql_query->fetch_assoc(), $usuario_tipo];
 
 }
+    public function inserirCarrinho($carrinho){
+        $conexao = $this->conectarBD();
+        $codCarrinho= "INSERT INTO carrinho (cliente_cod,produto_cod,quantidade) 
+                     VALUES ('{$carrinho->get_clienteCod()}','{$carrinho->get_produtoCod()}',
+                     '{$carrinho->get_quantidade()}')";
+
+        $result = mysqli_query($conexao,$codCarrinho);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function inserirProduto($produto){
         
@@ -69,6 +83,17 @@ class BancoDeDados{
         $listaProdutos = mysqli_query($conexao,$consulProd);
         return $listaProdutos;
     }
+    
+    public function retornarProdutosCarrinho(){
+        $conexao = $this->conectarBD();
+        $consulProd = "SELECT p.nome AS nome_produto, p.imagem_path AS caminho_imagem, p.valor AS valor_produto, c.quantidade AS quantidade
+        FROM carrinho c
+        JOIN produto p ON c.produto_cod = p.cod;
+        ";
+        $listaProdutosCarrinho = mysqli_query($conexao,$consulProd);
+        return $listaProdutosCarrinho;
+    }
+
     public function retornarProdutosCod($cod){
         $conexao = $this->conectarBD();
         $consulProd = "SELECT * FROM produto WHERE cod = $cod";

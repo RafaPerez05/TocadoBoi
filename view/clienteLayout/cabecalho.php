@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link rel="icon" href="../imagens/mylogo.png" type="image/png">
-    <title>Toca do boi - Admin</title>
+    <title>Toca do boi - Cliente</title>
     <link rel="stylesheet" href="../css/index.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/form.css">
