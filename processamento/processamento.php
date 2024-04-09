@@ -40,7 +40,7 @@ if(isset($_POST['inputNome']) &&
     
     $controlador->cadastrarCliente($nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
 
-    header('Location:../view/cadastroCliente.php');
+    header('Location:../view/login.php');
     die();
 }
 

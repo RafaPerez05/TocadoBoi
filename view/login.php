@@ -12,16 +12,14 @@
             <img src="../imagens/mylogo.png" alt="Logo" style="width: 50px;">
             <p>Bem vindo a toca</p>
             <form id="form-log" method="POST" action="../processamento/processamento.php">
-                <input id="input-log" type="text" placeholder="Email" name="inputEmailLog">
-                <input id="input-log" type="password" placeholder="Senha" name="inputSenhaLog">
-                <input id="botao-log" type="submit" value="ENTRE">
+                <input id="input-log" type="text" placeholder="Email" name="inputEmailLog" required>
+                <input id="input-log" type="password" placeholder="Senha" name="inputSenhaLog" required>
+                <input id="botao-log" type="submit" value="ENTRAR">
             </form>
             <p>Novo na Toca? <a href="cadastroCliente.php">Cadastrar</a></p>
         </section>
     </section>
 
-    <footer class="rodape-login">
-        <p>© 2024 Toca do boi. Todos os direitos reservados</p>
-    </footer>
+
 </body>
 </html>

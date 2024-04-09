@@ -11,6 +11,6 @@ session_start();
     <title>Document</title>
 </head>
 <body>
-    <h1>Olá cliente <?php echo  $_SESSION['id']; ?></h1>
+    <h1>Olá cliente <?php echo  $_SESSION['nome']; ?></h1>
 </body>
 </html>

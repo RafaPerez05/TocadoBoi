@@ -25,22 +25,17 @@ class BancoDeDados{
         $sql_code = "SELECT * FROM cliente WHERE email = '$email' AND senha = '$senha'";
         $sql_query = $conexao->query($sql_code) or die("Falha na execução do código SQL: " . $conexao->error);
         $quantidade = $sql_query->num_rows;
-        if($quantidade == 1){
-            
-            return $usuario = $sql_query->fetch_assoc();
-        }
-        else{
+        $usuario_tipo = "cliente";
+
+        if($quantidade == 0)
+        {
             $sql_code = "SELECT * FROM funcionario WHERE email = '$email' AND senha = '$senha'";
             $sql_query = $conexao->query($sql_code) or die("Falha na execução do código SQL: " . $conexao->error);
-            $quantidade = $sql_query->num_rows;
-            if($quantidade == 1){
-                
-                return $usuario = $sql_query->fetch_assoc();
-            }
-            else{
-                return "Falha";
-            }
-    }
+            $usuario_tipo = "funcionario";
+   
+        }
+        return [$sql_query->fetch_assoc(), $usuario_tipo];
+
 }
 
     public function inserirProduto($produto){

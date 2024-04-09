@@ -15,12 +15,30 @@ class Controlador{
 
     public function verificaLogin($email,$senha){
         $usuarioLogado = $this->bancoDeDados->verificaLoginBD($email,$senha);
-        if(isset($_SESSION)) {
+        session_destroy();
+        if (session_status() == PHP_SESSION_NONE)
+        {
             session_start();
-            $_SESSION['cod'] = $usuarioLogado['cod'];
-            $_SESSION['nome'] =$usuarioLogado['nome'];
-            header("Location: ../view/home.php");
         }
+
+        if(!empty($usuarioLogado[0]))
+        {
+            $_SESSION["cod"] = $usuarioLogado[0]['cod'];
+            $_SESSION["nome"] = $usuarioLogado[0]['nome'];
+            if($usuarioLogado[1] == "cliente"){
+                header('Location:../view/clienteVerProduto.php');
+            }
+            else
+                header('Location:../view/home.php');
+
+        }
+        else
+        {
+            echo "tratamento de erros";
+        }
+        
+
+        
 
     }
 
