@@ -50,8 +50,10 @@ class Controlador{
         $this->bancoDeDados->inserirCarrinho($carrinho);
     }
     public function visualizarProdutosCarrinho(){
+        session_start();
         $prod="";
-        $listaProdutosCarrinho = $this->bancoDeDados->retornarProdutosCarrinho();
+        $usuarioLogado = $_SESSION["cod"];
+        $listaProdutosCarrinho = $this->bancoDeDados->retornarProdutosCarrinho($usuarioLogado);
         while($produto = mysqli_fetch_assoc($listaProdutosCarrinho)){
             $prod .=
             "<div class='col-lg-4 col-md-6'>".
@@ -60,15 +62,25 @@ class Controlador{
                 "<div class='product-name'>".$produto["nome_produto"]."</div>".
 
                 //form
-                "<form class='col-lg-0 col-md-0' action='../processamento/#' method='post'>".
-                    "<input type='number' id='valor' class='product-price' value='". $produto["valor_produto"] ."'readonly style='border: none; background: transparent; outline: none;text-align: center;' readonly>".
-                    "<input id='quantidade' min='1' step='1' type='number'name='quantidade_carrinho' value='". $produto["quantidade"] ."'>".
+                "<form class='col-lg-0 col-md-0' action='../processamento/processamentoExcluirCarrinho.php' method='post'>".
+                    "<input type='hidden' name='cod' value='". $produto["codigo_carrinho"] ."' readonly>".             
+
+                    "<input class='product-price' id='quantity".$produto["codigo_carrinho"]."' type='text' class='form-control' placeholder='' style='border: none; background: transparent; outline: none;text-align: center' readonly value='". $produto["valor_produto"] ."'>".
+
+                    "<input id='add".$produto["codigo_carrinho"]."' type='text' class='form-control' placeholder='' style='border: none; background: transparent; outline: none;text-align: center'readonly  value='". $produto["quantidade"] ."'>".
+
+                    "<button class='btn btn-success increase' data-target='quantity".$produto["codigo_carrinho"]."' data-add='add".$produto["codigo_carrinho"]."' type='button'><i class='fa fa-plus' aria-hidden='true'></i></button>".
+                    "<button class='btn btn-danger decrease' data-target='quantity".$produto["codigo_carrinho"]."' data-add='add".$produto["codigo_carrinho"]."' type='button'><i class='fa fa-minus' aria-hidden='true'></i></button>".
                     "<button type='submit' class='btn btn-danger btn-add-to-cart'>Remover do Carrinho <i class='fa fa-shopping-cart'></i></button>". // Botão submit
                 "</form>". // Fecha o formulário
             "</div>".
         "</div>";
         }
         return $prod;
+    }
+
+    public function excluirCarrinho($cod){
+        $this->bancoDeDados->excluirCarrinho($cod);
     }
 
     public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem, $sexo){

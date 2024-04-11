@@ -12,28 +12,47 @@ include "clienteLayout/cabecalho.php";
         </div>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    // Declare a variável initialValue no escopo global
+    var initialValue;
 
-    <label for="valor">Valor:</label>
-<input type="text" id="valor" name="valor" value="10" readonly style="border: none; background: transparent; outline: none; text-align: center;">
+    $(document).ready(function () {
+      $(".increase").click(function () {
+        var targetInput = $("#" + $(this).data("target"));
 
-<label for="quantidade">Quantidade:</label>
-<input type="number" id="quantidade" name="quantidade" min="0" step="1" oninput="updateValor()">
-
-<script>
-function updateValor() {
-  var valorInput = document.getElementById('valor');
-  var quantidadeInput = document.getElementById('quantidade');
-
-  var valor = parseFloat(valorInput.value);
-  var quantidade = parseFloat(quantidadeInput.value);
-
-  if (!isNaN(valor) && !isNaN(quantidade)) {
-    valorInput.value = valor * quantidade;
-  }
-}
-</script>
+        if (!targetInput.data("initial-value")) {
+          var initialValue = parseFloat(targetInput.val());
+          targetInput.data("initial-value", initialValue);
+        }
 
 
+        var initialValue = targetInput.data("initial-value");
+        var currentValue = parseFloat(targetInput.val());
+        targetInput.val(currentValue + initialValue);
+
+        var addInput = $("#" + $(this).data("add"));
+        var currentValue = parseFloat(addInput.val());
+        addInput.val(currentValue + 1);
+      });
+
+      $(".decrease").click(function () {
+        var targetInput = $("#" + $(this).data("target"));
+
+        var initialValue = parseFloat(targetInput.data("initial-value"));
+
+        var currentValue = parseFloat(targetInput.val());
+
+        if (currentValue > initialValue) {
+          targetInput.val(currentValue - initialValue);
+          var addInput = $("#" + $(this).data("add"));
+          var currentValue = parseFloat(addInput.val());
+          addInput.val(currentValue - 1);
+        }
+      });
+
+    });
+  </script>
 
 <?php
   include "layout/rodape.php";

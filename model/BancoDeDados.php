@@ -37,20 +37,33 @@ class BancoDeDados{
         return [$sql_query->fetch_assoc(), $usuario_tipo];
 
 }
-    public function inserirCarrinho($carrinho){
-        $conexao = $this->conectarBD();
-        $codCarrinho= "INSERT INTO carrinho (cliente_cod,produto_cod,quantidade) 
-                     VALUES ('{$carrinho->get_clienteCod()}','{$carrinho->get_produtoCod()}',
-                     '{$carrinho->get_quantidade()}')";
+public function inserirCarrinho($carrinho) {
+    $conexao = $this->conectarBD();
 
-        $result = mysqli_query($conexao,$codCarrinho);
+    // Verificar se já existe um registro com o mesmo código de cliente e produto
+    $consultaExistente = "SELECT COUNT(*) AS total FROM carrinho WHERE cliente_cod = '{$carrinho->get_clienteCod()}' AND produto_cod = '{$carrinho->get_produtoCod()}'";
+    $resultadoConsulta = mysqli_query($conexao, $consultaExistente);
+    $linha = mysqli_fetch_assoc($resultadoConsulta);
 
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+    // Se já existir, retornar false
+    if ($linha['total'] > 0) {
+        return false;
     }
+
+    // Caso contrário, realizar a inserção
+    $codCarrinho = "INSERT INTO carrinho (cliente_cod, produto_cod, quantidade) 
+                    VALUES ('{$carrinho->get_clienteCod()}', '{$carrinho->get_produtoCod()}', '{$carrinho->get_quantidade()}')";
+    
+    $result = mysqli_query($conexao, $codCarrinho);
+
+    // Verificar se a inserção foi bem-sucedida
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
     public function inserirProduto($produto){
         
@@ -84,15 +97,16 @@ class BancoDeDados{
         return $listaProdutos;
     }
     
-    public function retornarProdutosCarrinho(){
+    public function retornarProdutosCarrinho($usuarioLogado) {
         $conexao = $this->conectarBD();
-        $consulProd = "SELECT p.nome AS nome_produto, p.imagem_path AS caminho_imagem, p.valor AS valor_produto, c.quantidade AS quantidade
-        FROM carrinho c
-        JOIN produto p ON c.produto_cod = p.cod;
-        ";
-        $listaProdutosCarrinho = mysqli_query($conexao,$consulProd);
+        $consulProd = "SELECT c.cod AS codigo_carrinho, p.nome AS nome_produto, p.imagem_path AS caminho_imagem, p.valor AS valor_produto, c.quantidade AS quantidade
+                        FROM carrinho c
+                        JOIN produto p ON c.produto_cod = p.cod
+                        WHERE c.cliente_cod = '{$usuarioLogado}'";
+        $listaProdutosCarrinho = mysqli_query($conexao, $consulProd);
         return $listaProdutosCarrinho;
     }
+    
 
     public function retornarProdutosCod($cod){
         $conexao = $this->conectarBD();
@@ -121,6 +135,17 @@ class BancoDeDados{
         
         if(mysqli_query($conexao, $query)){
             echo "Produto excluído com sucesso.";
+        } else{
+            echo "Erro ao excluir o produto: " . mysqli_error($conexao);
+        }
+    }
+
+    public function excluirCarrinho($cod){
+        $conexao = $this->conectarBD();
+        $query = "DELETE FROM carrinho WHERE cod = $cod";
+        
+        if(mysqli_query($conexao, $query)){
+            echo "Removido com sucesso.";
         } else{
             echo "Erro ao excluir o produto: " . mysqli_error($conexao);
         }

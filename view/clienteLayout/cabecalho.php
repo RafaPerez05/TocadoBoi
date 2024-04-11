@@ -37,8 +37,10 @@
 
       <ul class="nav-list">
         <li><a href="clienteVerProduto.php">Produtos</a></li>
-        <li><a href="#contato"><i class="fa fa-shopping-cart"></i></a></li>
+        <li><a href="clienteCarrinho.php"><i class="fa fa-shopping-cart"></i></a></li>
         <li><a href="#contato"><i class="fa fa-user"></i></a></li>
+        <li><a href="../processamento/sair.php">Sair</a></li>
+
 
       </ul>
     </nav>
