@@ -2,15 +2,16 @@
 require_once "../controller/Controlador.php";
 include "clienteLayout/cabecalho.php";
 ?>
-    <div class="container">
-        <div class="row">
-            <?php
-                $controlador = new Controlador();
-                echo $controlador->visualizarProdutosCarrinho();
-            ?>
-            <!-- Adicione mais produtos conforme necessário -->
+        <div class="container">
+            <div class="row">
+                <?php
+                    $controlador = new Controlador();
+                    echo $controlador->visualizarProdutosCarrinho();
+                ?>
+                <!-- Adicione mais produtos conforme necessário -->
+            </div>
         </div>
-    </div>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
