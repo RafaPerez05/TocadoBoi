@@ -2,6 +2,7 @@
 
 class Cliente{
 
+    protected $cod;
     protected $nome;
     protected $sobrenome;
     protected $cpf;
@@ -11,8 +12,9 @@ class Cliente{
     protected $email;
     protected $senha;
 
-    public function __construct($nome, $sobrenome, $Cpf, $datanasc, $telefone, $email, $senha)
+    public function __construct($cod, $nome, $sobrenome, $Cpf, $datanasc, $telefone, $email, $senha)
     {
+        $this->cod = $cod;
         $this->nome = $nome;
         $this->sobrenome = $sobrenome;
         $this->cpf = $Cpf;
@@ -22,6 +24,12 @@ class Cliente{
         $this->senha = $senha;
     }
 
+    public function get_cod(){
+        return ($this->cod);
+    }
+    public function set_cod($cod){
+        $this->cod = $cod;
+    }
     public function get_nome(){
         return($this->nome);
     }

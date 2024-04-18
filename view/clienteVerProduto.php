@@ -3,7 +3,7 @@
   include "clienteLayout/cabecalho.php";
   session_start();
 ?>
-    <h1>Olá cliente <?php echo  $_SESSION['nome']; ?></h1>
+    <!-- <h1>Olá cliente <?php echo  $_SESSION['nome']; ?></h1> -->
     <div class="container">
     <a href="clienteVerProdutoMasc.php">
       <div class="square design">

@@ -29,7 +29,8 @@ if(isset($_POST['inputNome']) &&
    isset($_POST['inputSenha'])
    
    )
-{
+{   
+    $cod = "";
     $nome = $_POST['inputNome'];
     $sobrenome = $_POST['inputSobrenome'];
     $cpf = $_POST['inputCPF'];
@@ -38,7 +39,7 @@ if(isset($_POST['inputNome']) &&
     $email = $_POST['inputEmail'];
     $senha = $_POST['inputSenha'];
     
-    $controlador->cadastrarCliente($nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
+    $controlador->cadastrarCliente($cod,$nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
 
     header('Location:../view/login.php');
     die();

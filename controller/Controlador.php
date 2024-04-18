@@ -89,9 +89,14 @@ class Controlador{
         $this->bancoDeDados->inserirProduto($produto);
     }
 
-    public function cadastrarCliente($nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha){
-        $cliente  = new Cliente($nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
+    public function cadastrarCliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha){
+        $cliente  = new Cliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
         $this->bancoDeDados->inserirCliente($cliente);
+    }
+
+    public function alterarCliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha){
+        $cliente  = new Cliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
+        $this->bancoDeDados->alterarCliente($cliente);
     }
 
     public function visualizarProdutos(){
@@ -243,6 +248,8 @@ class Controlador{
         $listaClientes = $this->bancoDeDados->retornarClienteLogado($usuarioLogado);
         while($cliente = mysqli_fetch_assoc($listaClientes)){
             $cli .= 
+
+            "<input id='input-log' type='hidden' class='form-control mb-4' Value='".$cliente['cod']."' placeholder='Nome' name='inputCod' readonly>" .
 
             "<div class='form-group'>" .
                 "<input id='input-log' type='text' class='form-control mb-4' Value='".$cliente['nome']."' placeholder='Nome' name='inputNome' required>" .

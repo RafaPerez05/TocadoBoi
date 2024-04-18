@@ -12,4 +12,4 @@ if(isset($_POST["cod"])){
 } else {
     echo "ID do produto não encontrado.";
 }
-?>
+

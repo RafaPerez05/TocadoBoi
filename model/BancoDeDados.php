@@ -1,5 +1,4 @@
 <?php
-
 class BancoDeDados{
     private $host;
     private $login;
@@ -79,6 +78,26 @@ public function inserirCarrinho($carrinho) {
         $consulta = "INSERT INTO cliente (nome, sobrenome, cpf, dataNascimento, telefone, email, senha) 
                      VALUES ('{$cliente->get_nome()}','{$cliente->get_sobrenome()}', '{$cliente->get_cpf()}','{$cliente->get_datanasc()}','{$cliente->get_telefone()}','{$cliente->get_email()}','{$cliente->get_senha()}')";
         mysqli_query($conexao,$consulta);
+    }
+
+    public function alterarCliente($cliente){
+        $conexao = $this->conectarBD();
+
+        $consulta = "UPDATE cliente SET 
+                        nome = '{$cliente->get_nome()}',
+                        sobrenome = '{$cliente->get_sobrenome()}',
+                        dataNascimento = '{$cliente->get_datanasc()}',
+                        telefone = '{$cliente->get_telefone()}',
+                        email = '{$cliente->get_email()}',
+                        senha = '{$cliente->get_senha()}'
+                    WHERE cod = '{$cliente->get_cod()}'";
+        $resultado = mysqli_query($conexao, $consulta);
+
+        if($resultado) {
+            echo "Cliente alterado com sucesso!";
+        } else {
+            echo "Ocorreu um erro ao tentar alterar o cliente.";
+        }
     }
     
     

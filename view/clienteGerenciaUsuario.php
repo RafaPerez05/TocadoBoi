@@ -1,7 +1,8 @@
 <?php
+session_start();
 require_once "../controller/Controlador.php";
 include "clienteLayout/cabecalho.php";
-session_start();
+
 
 ?>
 
@@ -14,7 +15,7 @@ session_start();
         <?php echo  $_SESSION['nome']; ?>, deseja alterar seus dados?</h4>
         </div>
         <div class="card-body">
-          <form>
+          <form method="POST" action="../processamento/processamentoAlterarCliente.php">
                 <?php
                     $controlador = new Controlador();
                     echo $controlador->visualizarClienteLogado();
