@@ -89,6 +89,12 @@ public function inserirCarrinho($carrinho) {
         $listaClientes = mysqli_query($conexao,$consulta);
         return $listaClientes;
     }
+    public function retornarClienteLogado($usuarioLogado){
+        $conexao = $this->conectarBD();
+        $consulta = "SELECT * FROM cliente WHERE cod = '{$usuarioLogado}'";
+        $clienteLogado = mysqli_query($conexao,$consulta);
+        return $clienteLogado;
+    }
     
     public function retornarProdutos(){
         $conexao = $this->conectarBD();

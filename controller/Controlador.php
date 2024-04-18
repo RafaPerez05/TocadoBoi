@@ -221,9 +221,7 @@ class Controlador{
 
 
     public function visualizarClientes(){
-
         $cli = "";
-
         $listaClientes = $this->bancoDeDados->retornarClientes();
         while($cliente = mysqli_fetch_assoc($listaClientes)){
             $cli .= "<section class=\"conteudo-bloco\">
@@ -233,7 +231,48 @@ class Controlador{
             <a>Telefone: ".$cliente['telefone']."</a><br>
             <a>Email: ".$cliente['email']."</a><br>
             <a>Senha: ".$cliente['senha']."</a>
-            </section>";
+            </section>"
+            ;
+        }
+        return $cli;
+    }
+    
+    public function visualizarClienteLogado(){
+        $cli = "";
+        $usuarioLogado = $_SESSION["cod"];
+        $listaClientes = $this->bancoDeDados->retornarClienteLogado($usuarioLogado);
+        while($cliente = mysqli_fetch_assoc($listaClientes)){
+            $cli .= 
+
+            "<div class='form-group'>" .
+                "<input id='input-log' type='text' class='form-control mb-4' Value='".$cliente['nome']."' placeholder='Nome' name='inputNome' required>" .
+            "</div>" .
+
+            "<div class='form-group'>" .
+                "<input id='input-log' type='text' class='form-control mb-4' Value='".$cliente['sobrenome']."' placeholder='Sobrenome' name='inputSobrenome' required>".
+            "</div>" .
+
+            "<div class='form-group'>" .
+            "<input id='input-log' type='text' class='form-control mb-4' Value='".$cliente['cpf']."'placeholder='CPF' name='inputCPF' maxlength='11' required>" .
+            "</div>" .
+
+            "<div class='form-group'>" .
+            "<input id='input-log' type='date' class='form-control mb-4' Value='".$cliente['dataNascimento']."' placeholder='Data de nascimento' name='inputDataNasc' required>" .
+            "</div>".
+
+            "<div class='form-group'>".
+                "<input id='input-log' type='tel' class='form-control telefone mb-4' Value='".$cliente['telefone']."' pattern='\(?[0-9]{2}\)?\s?[0-9]{4,5}-?[0-9]{4}' placeholder='Telefone' name='inputTelefone' required>" .
+            "</div>".
+
+            "<div class='form-group'>".
+                "<input id='input-log' type='email' class='form-control mb-4'  Value='".$cliente['email']."' placeholder='Email' name='inputEmail' required>" .
+            "</div>".
+
+            "<div class='form-group'>" .
+                "<input id='input-log' type='text' class='form-control mb-4'  Value='".$cliente['senha']."' placeholder='Senha' name='inputSenha' required>" .
+            "</div>"
+
+            ;
         }
         return $cli;
     }
