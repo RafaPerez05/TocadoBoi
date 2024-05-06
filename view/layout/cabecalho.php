@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link rel="icon" href="../imagens/mylogo.png" type="image/png">
     <title>Toca do boi - Admin</title>
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/indexAdm.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/form.css">
   <link rel="stylesheet" href="../css/grid.css">
@@ -43,10 +43,4 @@
     </nav>
   </header>
   <section class="slideshow">
-      </div>
-      <div class="direita">
-        <h2>BEM-VINDO À</h2>
-        <h1>Toca do Boi</h1>
-        <p>Página do administrador </p>
-      </div>
     </section>

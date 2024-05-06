@@ -53,7 +53,8 @@ if(!empty($_POST['inputNomeProd']) &&
    !empty($_POST['inputDescricaoProd']) && 
    !empty($_POST['inputValorProd']) && 
    !empty($_FILES['inputimagemProd'])&&
-   !empty($_POST['inputSexoProd'])
+   !empty($_POST['inputSexoProd'])&&
+   !empty($_POST['inputTipoProd'])
    )
 {
 
@@ -62,6 +63,7 @@ if(!empty($_POST['inputNomeProd']) &&
     $descricao = $_POST['inputDescricaoProd'];
     $valor = $_POST['inputValorProd'];
     $sexo = $_POST['inputSexoProd'];
+    $tipo = $_POST['inputTipoProd'];
 
     //insertImage
     $imagem_produto = $_FILES['inputimagemProd']['name'];
@@ -70,7 +72,7 @@ if(!empty($_POST['inputNomeProd']) &&
     $imagem_destino = $upload_dir . $imagem_produto;
 
     if (move_uploaded_file($imagem_temp, $imagem_destino)) {
-        $controlador->cadastrarProduto($nome,$fabricante,$descricao,$valor,$imagem_destino, $sexo);
+        $controlador->cadastrarProduto($nome,$fabricante,$descricao,$valor,$imagem_destino, $sexo, $tipo);
         header('Location:../view/cadastroProduto.php');
         die();
     }else{

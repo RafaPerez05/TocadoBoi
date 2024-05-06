@@ -19,7 +19,7 @@ if(isset($_POST['produto_cod']) &&
     $quantidade = $_POST['quantidade'];
     
     $controlador->adcionarCarrinho($cliente_cod,$produto_cod,$quantidade);
-    header('Location:../view/clienteCarrinho.php');
+    header('Location:../view/clienteVerProduto.php');
 
     
     die();

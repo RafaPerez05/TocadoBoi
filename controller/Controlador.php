@@ -83,9 +83,9 @@ class Controlador{
         $this->bancoDeDados->excluirCarrinho($cod);
     }
 
-    public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem, $sexo){
+    public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tipo){
 
-        $produto = new Produto($nome,$fabricante,$descricao,$valor,$imagem,$sexo);
+        $produto = new Produto($nome,$fabricante,$descricao,$valor,$imagem,$sexo,$tipo);
         $this->bancoDeDados->inserirProduto($produto);
     }
 
@@ -171,12 +171,14 @@ class Controlador{
         while($produto = mysqli_fetch_assoc($listaProdutos)){
             $prod .=
             "<div class='col-lg-4 col-md-6'>".
-            "<div class='product-card'>".
+            "<div class='product-card' id='". $produto["tipo"] . "'>".
                 "<img src='". $produto["imagem_path"] ."' alt='Product Image' class='product-image'>".
                 "<div class='product-name'>".$produto["nome"]."</div>".
                 "<div class='product-description'>". $produto["descricao"] ."</div>".
                 "<div class='product-price'>R$". $produto["valor"] ."</div>".
-                "<form action='../processamento/processamentoVendas.php' method='post'>". // Adiciona um formulário ao redor do botão
+
+                "<form action='../processamento/processamentoVendas.php' method='post'>".           
+                //Adiciona um formulário ao redor do botão
                     "<input type='hidden' name='produto_cod' value='". $produto["cod"] ."'>". // Adiciona um campo oculto com o nome do produto
                     "<input  type='hidden' name='cliente_cod' value='". $_SESSION["cod"] ."'>". // 
                     "<input type='hidden' name='valor_total' value='". $produto["valor"] ."'>". // Adiciona um campo oculto com o valor total

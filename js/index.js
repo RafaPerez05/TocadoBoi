@@ -66,77 +66,27 @@ window.addEventListener("scroll", function () {
   }
 });
 
-//FILTROS dos projetos
-document.getElementById("mostrarTodos").addEventListener("click", function () {
-  mostrarItens("square");
-});
 
-document.getElementById("mostrarDesigns").addEventListener("click", function () {
-  mostrarItens("design");
-});
 
-document.getElementById("mostrarProjetos").addEventListener("click", function () {
-  mostrarItens("projeto");
-});
+//SLIDESHOW
+let slideIndex = 0;
+showSlides();
 
-function mostrarItens(categoria) {
-  var itens = document.getElementsByClassName("square");
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("slideshow")[0].getElementsByTagName("li");
 
-  for (var i = 0; i < itens.length; i++) {
-      if (categoria === "square" || itens[i].classList.contains(categoria)) {
-          itens[i].style.display = "block";
-      } else {
-          itens[i].style.display = "none";
-      }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
   }
+
+  slideIndex++;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 10000); // Altere o tempo de exibição das imagens (em milissegundos) aqui
 }
 
-//JS PARA ROLAR
-document.addEventListener("DOMContentLoaded", function () {
-  // Selecione o link "Contato" pelo texto do link
-  const linkContato = document.querySelector('a[href="#contato"]');
-
-  // Adicione um ouvinte de evento de clique ao link
-  linkContato.addEventListener("click", function (event) {
-      event.preventDefault(); // Evite o comportamento padrão de seguir o link
-
-      // Selecione o footer pelo ID
-      const footer = document.getElementById("FormContato");
-
-      // Role suavemente até o footer
-      footer.scrollIntoView({
-          behavior: "smooth",
-      });
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Selecione o link "Contato" pelo texto do link
-  const linkContato = document.querySelector('a[href="#projetos"]');
-
-  // Adicione um ouvinte de evento de clique ao link
-  linkContato.addEventListener("click", function (event) {
-      event.preventDefault(); // Evite o comportamento padrão de seguir o link
-
-      // Selecione o footer pelo ID
-      const footer = document.getElementById("projetos");
-
-      // Role suavemente até o footer
-      footer.scrollIntoView({
-          behavior: "smooth",
-      });
-  });
-});
-
-function redirecionaEmail(){
-  window.alert("Enviado com sucesso!");
-  document.getElementById("formName").textContent = "";
-  document.getElementById("formEmail").textContent= "";
-  document.getElementById("formMensage").textContent = "";
-
-};
-
-document.getElementById("enviaEmail").addEventListener("click", function () {
-  redirecionaEmail();
-});
 

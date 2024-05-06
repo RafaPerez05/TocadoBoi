@@ -4,7 +4,7 @@ include "layout/cabecalho.php";
 ?>
 <main>
         <!-- Modal -->
-        <div id="myModal" class="modal">
+        <div id="myModal" class="modal" >
         <!-- Conteúdo do modal -->
         <div class="modal-content">
         <span class="close">&times;</span>
@@ -37,6 +37,10 @@ include "layout/cabecalho.php";
                             <option value="Masculino">Masculino</option>
                             <option value="Feminino">Feminino</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <input type="text" class="form-control" name="inputTipoProd" placeholder="Tipo de produto">
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Cadastrar</button>

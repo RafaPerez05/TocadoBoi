@@ -67,8 +67,8 @@ public function inserirCarrinho($carrinho) {
     public function inserirProduto($produto){
         
         $conexao = $this->conectarBD();
-        $consulProd= "INSERT INTO produto (nome, fabricante, descricao, valor, imagem_path, sexo) 
-                     VALUES ('{$produto->get_Nome()}','{$produto->get_Fabricante()}','{$produto->get_Descricao()}','{$produto->get_Valor()}','{$produto->get_Imagem()}','{$produto->get_Sexo()}')";
+        $consulProd= "INSERT INTO produto (nome, fabricante, descricao, valor, imagem_path, sexo, tipo) 
+                     VALUES ('{$produto->get_Nome()}','{$produto->get_Fabricante()}','{$produto->get_Descricao()}','{$produto->get_Valor()}','{$produto->get_Imagem()}','{$produto->get_Sexo()}','{$produto->get_Tipo()}')";
         mysqli_query($conexao,$consulProd);
     }
     
