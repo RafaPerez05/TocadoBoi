@@ -5,10 +5,12 @@
 ?>
 
 <form class="d-flex m-4">
-    <input class="form-control" id="searchInput" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i>
+    <input class="form-control" id="searchInput" type="search" placeholder="O que procura?" aria-label="Search">
+    <button class="btn btn-outline-secondary" type="hiden">
+        <i class="fa fa-search" aria-hidden="true"></i>
     </button>
 </form>
+
 <!-- 
 <div class="container">
     <a href="clienteVerProdutoMasc.php">
@@ -32,6 +34,7 @@
 </div>
 -->
 
+
 <div class="container">
     <div class="row">
         <?php
@@ -43,7 +46,7 @@
 
 <script>
 const searchInput = document.getElementById('searchInput');
-const productsList = document.getElementsByClassName('product-card');
+const productsList = document.getElementsByClassName('col-lg-4 col-md-6');
 
 const test = productsList[0].getAttribute("id");
 
