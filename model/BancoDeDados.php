@@ -140,19 +140,6 @@ public function inserirCarrinho($carrinho) {
         return $Produto;
     }
 
-    public function retornarProdutosSexoM(){
-        $conexao = $this->conectarBD();
-        $consulProd = "SELECT * FROM produto WHERE sexo = 'Masculino'";
-        $Produto = mysqli_query($conexao,$consulProd);
-        return $Produto;
-    }
-    public function retornarProdutosSexoF(){
-        $conexao = $this->conectarBD();
-        $consulProd = "SELECT * FROM produto WHERE sexo = 'Feminino'";
-        $Produto = mysqli_query($conexao,$consulProd);
-        return $Produto;
-    }
-
     public function excluirProdutos($cod){
         $conexao = $this->conectarBD();
         
@@ -175,6 +162,31 @@ public function inserirCarrinho($carrinho) {
             echo "Erro ao excluir o produto: " . mysqli_error($conexao);
         }
     }
+
+    public function cadastrarEndereco($endereco){
+        $conexao = $this->conectarBD();
+        $consulta = "INSERT INTO endereco (cod_cliente, cep, rua, numero, bairro, complemento) 
+                     VALUES ('{$endereco->get_cod_cliente()}','{$endereco->get_cep()}', '{$endereco->get_rua()}','{$endereco->get_numero()}','{$endereco->get_bairro()}','{$endereco->get_complemento()}')";
+        mysqli_query($conexao,$consulta);
+    }
+
+    public function retornarEndereco($usuarioLogado){
+        $conexao = $this->conectarBD();
+        $consulProd = "SELECT cod FROM endereco WHERE cod_cliente = $usuarioLogado";
+        $resultado = mysqli_query($conexao, $consulProd);
+    
+        // Verifica se a consulta retornou algum resultado
+        if ($resultado && mysqli_num_rows($resultado) > 0) {
+            // Retorna o resultado da consulta diretamente
+            return mysqli_fetch_assoc($resultado);
+        } else {
+            // Se não houver resultado, retorna null
+            return null;
+        }
+    }
+    
+    
+
 
 }
 

@@ -4,6 +4,8 @@ require_once("../model/Cliente.php");
 require_once("../model/Produto.php");
 require_once("../model/Carrinho.php");
 require_once("../model/Venda.php");
+require_once("../model/Endereco.php");
+
 
 
 
@@ -53,6 +55,14 @@ class Controlador{
         session_start();
         $prod="";
         $usuarioLogado = $_SESSION["cod"];
+        $endereco = $this->bancoDeDados->retornarEndereco($usuarioLogado);
+        if ($endereco !== null) {
+            $codEndereco = $endereco['cod'];
+        } else {
+            $codEndereco = 0;
+        }
+
+
         $listaProdutosCarrinho = $this->bancoDeDados->retornarProdutosCarrinho($usuarioLogado);
         while($produto = mysqli_fetch_assoc($listaProdutosCarrinho)){
             $prod .=
@@ -66,10 +76,12 @@ class Controlador{
                 "</div>" .
             "</div>" .
             "<div class='pl-md-0 pl-1'><b>R$ ". $produto["valor_produto"] ."</b></div>" .
-
-            "<div class='pl-md-0 pl-2'>" .
-
-                "<button class='btn btn-secondary increase' data-target='quantity".$produto["codigo_carrinho"]."' data-add='add".$produto["codigo_carrinho"]."' type='button'> <i class='fa fa-plus' aria-hidden='true'></i> </button>" .
+            //botoes de quantidade abaixo
+            
+                //"<form action='' method=''>".
+                    "<input type='hidden' name='cod' value='". $produto["codigo_carrinho"] ."' readonly>".
+                    "<button type='submit' class='btn btn-secondary increase' data-target='quantity".$produto["codigo_carrinho"]."' data-add='add".$produto["codigo_carrinho"]."' type='button'> <i class='fa fa-plus' aria-hidden='true'></i> </button>" .
+                //"</form>".
 
                 "<input type='text' class='px-md-3 px-1' 
                 id='add".$produto["codigo_carrinho"]."'
@@ -78,24 +90,71 @@ class Controlador{
                 size='1'
                 ></input>" .
 
-                "<button class='btn btn-secondary decrease' data-target='quantity".$produto["codigo_carrinho"]."' data-add='add".$produto["codigo_carrinho"]."'><i class='fa fa-minus' aria-hidden='true'></i></button>" .
-            "</div>" .
-            
+                //"<form action='' method=''>".
+                    "<input type='hidden' name='cod' value='". $produto["codigo_carrinho"] ."' readonly>".
+                    "<button  type='submit' class='btn btn-secondary decrease' data-target='quantity".$produto["codigo_carrinho"]."' data-add='add".$produto["codigo_carrinho"]."'><i class='fa fa-minus' aria-hidden='true'></i></button>" .
+                //"</form>".
+
+
             "<input class='pl-md-0 pl-1' 
             id='quantity".$produto["codigo_carrinho"]."'
             type='text' value='". $produto["valor_produto"] ."'
             style='border: none; background: transparent; outline: none;text-align: center'readonly
-                size='1'
-                ></input>" .
-            
+                size='1' ></input>" .
+
             "<form action='../processamento/processamentoExcluirCarrinho.php' method='post'>".
             "<input type='hidden' name='cod' value='". $produto["codigo_carrinho"] ."' readonly>".             
             "<button type='submit' class='btn btn-danger'><i class='fa fa-trash-o' aria-hidden='true'></i>
             </button>" .
             "</form>".
         "</div>" .
-   " </div>";
+   " </div>" .
 
+   //teste modal
+   "<div id='myModal' class='modal' >" .
+   "<div class='modal-content'>" .
+   "<span class='close'>"."&times;"."</span>".
+    "<section class='conteudo-formulario-cadastro'>" .
+        "<form action='../processamento/processamentoAddEndereco.php' method='POST' enctype='multipart/form-data'>" .
+        "<section class='endereco'>" .
+            "<label>Dados do endereço para entrega</label>" .
+            //codigo de usuario
+            "<input type='hidden' class='form-control' name='inputUsuarioLogado' value='".$usuarioLogado."'></input>" .
+            //codigo do endereco
+            "<input type='hidden' id='codEndereco' class='form-control' name='inputEndereco' value='". $codEndereco."'></input>" .
+
+
+            "<div class='mb-3'>" .
+                "<label for='CEP' class='form-label'>CEP</label>" .
+                "<input type='number' class='form-control' name='inputCep' placeholder='Cep'required></input>" .
+            "</div>" .
+
+            "<div class='mb-3'>" .
+                "<label for='Rua' class='form-label'>Rua</label>" .
+                "<input type='text' class='form-control' name='inputRua' placeholder='Rua' required>" .
+            "</div>" .
+
+            "<div class='mb-3'>" .
+                "<label for='Numero' class='form-label'>Número</label>" .
+                "<input type='number' class='form-control' name='inputNumero' placeholder='Número' required>" .
+            "</div>" .
+
+            "<div class='mb-3'>" .
+                "<label for='Bairro' class='form-label'>Bairro</label>" .
+                "<input type='text' class='form-control' name='inputBairro' placeholder='Bairro' required>" .
+            "</div>" .
+
+            "<div class='mb-3'>" .
+                "<label for='Complemento' class='form-label'>Complemento</label>" .
+                "<input type='text' class='form-control' name='inputComplemento' placeholder='Complemento (opcional)'>" .
+            "</div>" .  
+                  
+            "<button type='submit' class='btn btn-primary'>Cadastrar</button>" .
+        "</section>" .
+        "</form>" .
+   "</section>" .
+    "</div>" .
+    "</div>";
 
 
 
@@ -123,6 +182,11 @@ class Controlador{
         $cliente  = new Cliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
         $this->bancoDeDados->alterarCliente($cliente);
     }
+                    
+    public function cadastrarEndereco($cod,$inputUsuarioLogado, $inputCep, $inputRua, $inputNumero, $inputBairro, $inputComplemento){
+        $endereco  = new Endereco($cod,$inputUsuarioLogado, $inputCep, $inputRua, $inputNumero, $inputBairro, $inputComplemento);
+        $this->bancoDeDados->cadastrarEndereco($endereco);
+    }
 
     public function visualizarProdutos(){
         $prod="";
@@ -143,7 +207,10 @@ class Controlador{
                         "</form>".
                     "</td>".
                     "<td>".
+
+                    //criar formulario aqui!!!
                     "<a class='btn btn-warning openModalAlterar' name='alterar_produto'>Alterar</a>".
+
                     "</td>".
                 "</tr>".
                 "</tbody>";
@@ -215,41 +282,6 @@ class Controlador{
         }
         return $prod;
     }
-    public function visualizarProdutosMasc(){
-        $prod="";
-        $listaProdutos = $this->bancoDeDados->retornarProdutosSexoM();
-        while($produto = mysqli_fetch_assoc($listaProdutos)){
-            $prod .=
-            "<div class='col-lg-4 col-md-6'>".
-                "<div class='product-card'>".
-                    "<img src='". $produto["imagem_path"] ."'alt='Product Image' class='product-image'>".
-                    "<div class='product-name'>".$produto["nome"]."</div>".
-                    "<div class='product-description'>". $produto["descricao"] ."</div>".
-                    "<div class='product-price'>R$". $produto["valor"] ."</div>".
-                    "<button class='btn btn-warning btn-add-to-cart'>Adicionar ao Carrinho</button>".
-                "</div>".
-            "</div>";
-        }
-        return $prod;
-    }
-    public function visualizarProdutosFem(){
-        $prod="";
-        $listaProdutos = $this->bancoDeDados->retornarProdutosSexoF();
-        while($produto = mysqli_fetch_assoc($listaProdutos)){
-            $prod .=
-            "<div class='col-lg-4 col-md-6'>".
-                "<div class='product-card'>".
-                    "<img src='". $produto["imagem_path"] ."'alt='Product Image' class='product-image'>".
-                    "<div class='product-name'>".$produto["nome"]."</div>".
-                    "<div class='product-description'>". $produto["descricao"] ."</div>".
-                    "<div class='product-price'>R$". $produto["valor"] ."</div>".
-                    "<button class='btn btn-warning btn-add-to-cart'>Adicionar ao Carrinho</button>".
-                "</div>".
-            "</div>";
-        }
-        return $prod;
-    }
-
 
 
     public function visualizarClientes(){
@@ -314,7 +346,8 @@ class Controlador{
     public function excluirProduto($cod){
         $this->bancoDeDados->excluirProdutos($cod);
     }
-    
+
+
 
 }
 

@@ -32,7 +32,7 @@ include "clienteLayout/cabecalho.php";
                             size="1" Value="0"></input>
                     </div>
                     <div>
-                        <button class="btn btn-sm bg-dark text-white px-lg-5 px-3">CONTINUE</button>
+                        <button class="btn btn-sm bg-dark text-white px-lg-5 px-3 openModal">CONTINUE</button>
                     </div>
                 </div>
             </div>
@@ -42,11 +42,10 @@ include "clienteLayout/cabecalho.php";
 
 
 
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-    // Declare a variável initialValue no escopo global
-    var initialValue;
-
     $(document).ready(function() {
         // Função para calcular o total
         function calcularTotal() {
@@ -58,23 +57,28 @@ include "clienteLayout/cabecalho.php";
             document.getElementById("total").value = sum; // Update the total sum
         }
 
-        // Atualizar o total quando a página for carregada
+        // Função para salvar os valores iniciais de todos os inputs
+        function salvarValoresIniciais() {
+            var inputs = document.querySelectorAll('[id^="quantity"]');
+            inputs.forEach(function(input) {
+                var initialValue = parseFloat(input.value);
+                $(input).data("initial-value", initialValue);
+            });
+        }
+
+        // Atualizar o total e salvar os valores iniciais quando a página for carregada
+        salvarValoresIniciais();
         calcularTotal();
 
         // Evento de clique no botão de aumento
         $(".increase").click(function() {
             var targetInput = $("#" + $(this).data("target"));
 
-            if (!targetInput.data("initial-value")) {
-                var initialValue = parseFloat(targetInput.val());
-                targetInput.data("initial-value", initialValue);
-            }
-
             var initialValue = targetInput.data("initial-value");
             var currentValue = parseFloat(targetInput.val());
             targetInput.val(currentValue + initialValue);
             var addInput = $("#" + $(this).data("add"));
-            var currentValue = parseFloat(addInput.val());
+            currentValue = parseFloat(addInput.val());
             addInput.val(currentValue + 1);
 
             // Recalcular o total
@@ -85,23 +89,66 @@ include "clienteLayout/cabecalho.php";
         $(".decrease").click(function() {
             var targetInput = $("#" + $(this).data("target"));
 
-            var initialValue = parseFloat(targetInput.data("initial-value"));
-
+            var initialValue = targetInput.data("initial-value");
             var currentValue = parseFloat(targetInput.val());
 
             if (currentValue > initialValue) {
                 targetInput.val(currentValue - initialValue);
                 var addInput = $("#" + $(this).data("add"));
-                var currentValue = parseFloat(addInput.val());
+                currentValue = parseFloat(addInput.val());
                 addInput.val(currentValue - 1);
 
                 // Recalcular o total
                 calcularTotal();
             }
         });
-
     });
+
+
+    //MODALLL 
+    //MODAL CADASTRO
+    var modalCad = document.getElementById("myModal");
+    var btnsModalCad = document.querySelectorAll(".openModal");
+    var spanCad = document.getElementsByClassName("close")[0];
+
+    //esconder o modal de cadastro de endereco
+    var codEndereco = document.getElementById("codEndereco")
+    var modalCadEndereco = document.getElementsByClassName("endereco")[0];
+    console.log(codEndereco.value)
+
+
+
+    // Para cada botão de cadastro, adicionar um evento de clique para abrir o modal
+    btnsModalCad.forEach(function(btn) {
+        btn.onclick = function() {
+            modalCad.style.display = "block";
+
+            if (codEndereco.value == 0) {
+                modalCadEndereco.style.display = "block";
+
+            } else {
+                modalCadEndereco.style.display = "none";
+            }
+
+        }
+    });
+
+    // Quando o usuário clicar no botão de fechar (para o modal de cadastro), fechar o modal
+    spanCad.onclick = function() {
+        modalCad.style.display = "none";
+    }
+
+    // Quando o usuário clicar fora do modal (para o modal de alteração), fechar o modal
+    window.onclick = function(event) {
+        if (event.target == modalCad) {
+            modalCad.style.display = "none";
+        } else if (event.target == modalCad) {
+            modalCad.style.display = "none";
+        }
+    }
     </script>
+
+
 
 
 
