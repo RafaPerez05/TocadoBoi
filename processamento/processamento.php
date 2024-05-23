@@ -2,7 +2,7 @@
 
 session_start();
 require_once("../controller/Controlador.php");
-require_once("../model/Produto.php");
+require_once ("../model/FactoryProduto.php");
 
 $controlador = new Controlador();
 
@@ -48,35 +48,48 @@ if(isset($_POST['inputNome']) &&
 
 
 //Cadastro de Produto
-if(!empty($_POST['inputNomeProd']) && 
-   !empty($_POST['inputFabricanteProd']) && 
-   !empty($_POST['inputDescricaoProd']) && 
-   !empty($_POST['inputValorProd']) && 
-   !empty($_FILES['inputimagemProd'])&&
-   !empty($_POST['inputSexoProd'])&&
-   !empty($_POST['inputTipoProd'])
-   )
-{
+if (
+    !empty($_POST['inputNomeProd']) && 
+    !empty($_POST['inputFabricanteProd']) && 
+    !empty($_POST['inputDescricaoProd']) && 
+    !empty($_POST['inputValorProd']) && 
+    !empty($_FILES['inputimagemProd']) &&
+    !empty($_POST['inputSexoProd']) &&
+    !empty($_POST['inputTipoProd']) &&
+    !empty($_POST['inputTamanhoProd']) &&
+    !empty($_POST['inputMaterialProd'])
+) {
+    // Obter os dados do formulário
+    $dados = [
+        'nome' => $_POST['inputNomeProd'],
+        'fabricante' => $_POST['inputFabricanteProd'],
+        'descricao' => $_POST['inputDescricaoProd'],
+        'valor' => $_POST['inputValorProd'],
+        'sexo' => $_POST['inputSexoProd'],
+        'tipo' => $_POST['inputTipoProd'],
+        'tamanho' => $_POST['inputTamanhoProd'],
+        'material' => $_POST['inputMaterialProd'],
+        'altura_cano' => $_POST['inputAltCanoProd'] ?? null,
+        'modelo' => $_POST['inputModeloProd'] ?? null,
+        'cor' => $_POST['inputCorProd'] ?? null,
+        'estilo' => $_POST['inputEstiloProd'] ?? null,
+        'circunferencia' => $_POST['inputCircunferenciaProd'] ?? null,
+        'largura' => $_POST['inputLarguraProd'] ?? null,
+        'material_fivela' => $_POST['inputFivelaProd'] ?? null
+    ];
 
-    $nome = $_POST['inputNomeProd'];
-    $fabricante = $_POST['inputFabricanteProd'];
-    $descricao = $_POST['inputDescricaoProd'];
-    $valor = $_POST['inputValorProd'];
-    $sexo = $_POST['inputSexoProd'];
-    $tipo = $_POST['inputTipoProd'];
-
-    //insertImage
+    // Upload da imagem
     $imagem_produto = $_FILES['inputimagemProd']['name'];
     $imagem_temp = $_FILES['inputimagemProd']['tmp_name'];
     $upload_dir = "../imagens/uploads/";
-    $imagem_destino = $upload_dir . $imagem_produto;
+    $dados['imagem_destino'] = $upload_dir . $imagem_produto;
 
-    if (move_uploaded_file($imagem_temp, $imagem_destino)) {
-        $controlador->cadastrarProduto($nome,$fabricante,$descricao,$valor,$imagem_destino, $sexo, $tipo);
+    if (move_uploaded_file($imagem_temp, $dados['imagem_destino'])) {
+        $controlador->cadastrarProduto($dados);
         header('Location:../view/cadastroProduto.php');
         die();
-    }else{
-        echo "deu ruim";
+    } else {
+        echo "Erro ao fazer upload da imagem.";
     }
 }
 

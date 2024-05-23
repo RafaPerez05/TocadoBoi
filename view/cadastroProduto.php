@@ -39,10 +39,74 @@ include "layout/cabecalho.php";
                             <option value="Feminino">Feminino</option>
                         </select>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label">Tamanho</label>
+                        <input type="text" class="form-control" name="inputTamanhoProd" placeholder="Tamanho (M) ou 39">
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="material" class="form-label">Material</label>
+                        <input type="text" class="form-control" name="inputMaterialProd" placeholder="Material">
+                    </div>
+
                     <div class="mb-3">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <input type="text" class="form-control" name="inputTipoProd" placeholder="Tipo de produto">
+                        <select id="tipoSelect" class="form-select" name="inputTipoProd">
+                            <option value="BOTA">Bota</option>
+                            <option value="CAMISA">Camisa</option>
+                            <option value="CHAPEU">Chapéu</option>
+                            <option value="CINTO">Cinto</option>
+                        </select>
                     </div>
+
+                    <section id="bota" class="bota hidden">
+                        <div class="mb-3">
+                            <label for="Altura do cano" class="form-label">Altura do cano</label>
+                            <input type="number" class="form-control" name="inputAltCanoProd"
+                                placeholder="Altura do cano em cm"></input>
+                        </div>
+                    </section>
+
+                    <section id="camisa" class="camisa hidden">
+                        <div class="mb-3">
+                            <label for="Modelo" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" name="inputModeloProd"
+                                placeholder="Modelo da camisa"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Cor" class="form-label">Cor</label>
+                            <input type="text" class="form-control" name="inputCorProd"
+                                placeholder="Cor da camisa"></input>
+                        </div>
+                    </section>
+
+                    <section id="chapeu" class="chapeu hidden">
+                        <div class="mb-3">
+                            <label for="Estilo" class="form-label">Estilo</label>
+                            <input type="text" class="form-control" name="inputEstiloProd"
+                                placeholder="Estilo do chapéu"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Circunferência" class="form-label">Circunferência</label>
+                            <input type="text" class="form-control" name="inputCirculoProd"
+                                placeholder="Circunferência do chapéu"></input>
+                        </div>
+                    </section>
+
+                    <section id="cinto" class="cinto hidden">
+                        <div class="mb-3">
+                            <label for="Largura" class="form-label">Largura</label>
+                            <input type="text" class="form-control" name="inputLarguraProd"
+                                placeholder="Largura do cinto"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Material da fivela" class="form-label">Material da fivela</label>
+                            <input type="text" class="form-control" name="inputFivelaProd"
+                                placeholder="Material da fivela"></input>
+                        </div>
+                    </section>
 
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </form>
@@ -108,31 +172,57 @@ spanCad.onclick = function() {
     modalCad.style.display = "none";
 }
 
-//MODAL ALTERAR
-var modalAlt = document.getElementById("myModalAlterar");
-var btnsModalAlt = document.querySelectorAll(".openModalAlterar");
-var spanAlt = document.getElementsByClassName("close")[1]; // Use [1] para obter o segundo elemento com a classe "close"
-
-// Para cada botão de alteração, adicionar um evento de clique para abrir o modal de alteração
-btnsModalAlt.forEach(function(btn) {
-    btn.onclick = function() {
-        modalAlt.style.display = "block";
-    }
-});
-
-// Quando o usuário clicar no botão de fechar (para o modal de alteração), fechar o modal
-spanAlt.onclick = function() {
-    modalAlt.style.display = "none";
-}
-
-// Quando o usuário clicar fora do modal (para o modal de alteração), fechar o modal
+// Quando o usuário clicar fora do modal fechar o modal
 window.onclick = function(event) {
-    if (event.target == modalAlt) {
-        modalAlt.style.display = "none";
-    } else if (event.target == modalCad) {
+    if (event.target == modalCad) {
         modalCad.style.display = "none";
     }
 }
+
+
+var opcBota = document.getElementById("bota");
+
+//começa com bota aparecendo
+opcBota.style.display = "block";
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const tipoSelect = document.getElementById('tipoSelect');
+
+    tipoSelect.addEventListener('change', (event) => {
+        const selectedValue = event.target.value;
+        console.log('Valor selecionado:', selectedValue);
+
+        var opcBota = document.getElementById("bota");
+        var opcCamisa = document.getElementById("camisa");
+        var opcChapeu = document.getElementById("chapeu");
+        var opcCinto = document.getElementById("cinto");
+
+        if (selectedValue == "BOTA") {
+            opcBota.style.display = "block";
+            opcCamisa.style.display = "none";
+            opcChapeu.style.display = "none";
+            opcCinto.style.display = "none";
+        } else if (selectedValue == "CAMISA") {
+            opcBota.style.display = "none";
+            opcCamisa.style.display = "block";
+            opcChapeu.style.display = "none";
+            opcCinto.style.display = "none";
+
+        } else if (selectedValue == "CHAPEU") {
+            opcBota.style.display = "none";
+            opcCamisa.style.display = "none";
+            opcChapeu.style.display = "block";
+            opcCinto.style.display = "none";
+
+        } else if (selectedValue == "CINTO") {
+            opcBota.style.display = "none";
+            opcCamisa.style.display = "none";
+            opcChapeu.style.display = "none";
+            opcCinto.style.display = "block";
+        }
+    });
+});
 </script>
 
 <?php

@@ -1,5 +1,8 @@
 <?php
 class BancoDeDados{
+
+    private static $instance;
+
     private $host;
     private $login;
     private $senha;
@@ -10,6 +13,14 @@ class BancoDeDados{
         $this->login = $Login;
         $this->senha = $Senha;
         $this->dataBase = $DataBase;
+    }
+
+    // Método estático para obter a instância única da classe
+    public static function getInstance(){
+        if (!self::$instance) {
+            self::$instance = new BancoDeDados("localhost", "root", "", "toca");
+        }
+        return self::$instance;
     }
 
     //Métodos
@@ -64,13 +75,58 @@ public function inserirCarrinho($carrinho) {
 }
 
 
-    public function inserirProduto($produto){
-        
-        $conexao = $this->conectarBD();
-        $consulProd= "INSERT INTO produto (nome, fabricante, descricao, valor, imagem_path, sexo, tipo) 
-                     VALUES ('{$produto->get_Nome()}','{$produto->get_Fabricante()}','{$produto->get_Descricao()}','{$produto->get_Valor()}','{$produto->get_Imagem()}','{$produto->get_Sexo()}','{$produto->get_Tipo()}')";
-        mysqli_query($conexao,$consulProd);
+public function inserirProduto($produto) {
+    $conexao = $this->conectarBD();
+
+    // Inserção na tabela produto
+    $consulProd = "INSERT INTO produto (nome, fabricante, descricao, valor, imagem_path, sexo, tipo, tamanho, material) 
+                   VALUES ('{$produto->get_Nome()}', '{$produto->get_Fabricante()}', '{$produto->get_Descricao()}', '{$produto->get_Valor()}', '{$produto->get_Imagem()}', '{$produto->get_Sexo()}', '{$produto->get_Tipo()}', '{$produto->get_Tamanho()}', '{$produto->get_Material()}')";
+    if (mysqli_query($conexao, $consulProd)) {
+        // Obtendo o ID do produto inserido
+        $produtoId = mysqli_insert_id($conexao);
+
+        // Inserção nas tabelas específicas
+        switch (get_class($produto)) {
+            case 'Bota':
+                $alturaCano = $produto->getAlturaCano();
+                $consulEspecifico = "INSERT INTO bota (produto_cod, altura_cano) VALUES ('$produtoId', '$alturaCano')";
+                if (!mysqli_query($conexao, $consulEspecifico)) {
+                    echo "Erro ao inserir na tabela bota: " . mysqli_error($conexao);
+                }
+                break;
+            case 'Camisa':
+                $modelo = $produto->getModelo();
+                $cor = $produto->getCor();
+                $consulEspecifico = "INSERT INTO camisa (produto_cod, modelo, cor) VALUES ('$produtoId', '$modelo', '$cor')";
+                if (!mysqli_query($conexao, $consulEspecifico)) {
+                    echo "Erro ao inserir na tabela camisa: " . mysqli_error($conexao);
+                }
+                break;
+            case 'Chapeu':
+                $estilo = $produto->getEstilo();
+                $circunferencia = $produto->getCircunferencia();
+                $consulEspecifico = "INSERT INTO chapeu (produto_cod, estilo, circunferencia) VALUES ('$produtoId', '$estilo', '$circunferencia')";
+                if (!mysqli_query($conexao, $consulEspecifico)) {
+                    echo "Erro ao inserir na tabela chapeu: " . mysqli_error($conexao);
+                }
+                break;
+            case 'Cinto':
+                $largura = $produto->getLargura();
+                $materialFivela = $produto->getMaterialFivela();
+                $consulEspecifico = "INSERT INTO cinto (produto_cod, largura, material_fivela) VALUES ('$produtoId', '$largura', '$materialFivela')";
+                if (!mysqli_query($conexao, $consulEspecifico)) {
+                    echo "Erro ao inserir na tabela cinto: " . mysqli_error($conexao);
+                }
+                break;
+            default:
+                // Não há inserção específica para produtos genéricos
+                break;
+        }
+    } else {
+        echo "Erro ao inserir na tabela produto: " . mysqli_error($conexao);
     }
+}
+
     
     public function inserirCliente($cliente){
         

@@ -5,6 +5,7 @@ require_once("../model/Produto.php");
 require_once("../model/Carrinho.php");
 require_once("../model/Venda.php");
 require_once("../model/Endereco.php");
+require_once ("../model/FactoryProduto.php");
 
 
 
@@ -14,8 +15,10 @@ class Controlador{
     //Atributo
     private $bancoDeDados;
 
+    //metodo singleton
     function __construct(){
-        $this->bancoDeDados = new BancoDeDados("localhost","root","","toca");
+        // Obter a instância única do BancoDeDados
+        $this->bancoDeDados = BancoDeDados::getInstance();
     }
 
     public function verificaLogin($email,$senha){
@@ -51,6 +54,7 @@ class Controlador{
         $carrinho = new Carrinho($cliente_cod,$produto_cod,$quantidade);
         $this->bancoDeDados->inserirCarrinho($carrinho);
     }
+
     public function visualizarProdutosCarrinho(){
         session_start();
         $prod="";
@@ -116,7 +120,7 @@ class Controlador{
    "<span class='close'>"."&times;"."</span>".
     "<section class='conteudo-formulario-cadastro'>" .
         "<form action='../processamento/processamentoAddEndereco.php' method='POST' enctype='multipart/form-data'>" .
-        "<section class='endereco'>" .
+        "<section class='form-endereco'>" .
             "<label>Dados do endereço para entrega</label>" .
             //codigo de usuario
             "<input type='hidden' class='form-control' name='inputUsuarioLogado' value='".$usuarioLogado."'></input>" .
@@ -167,11 +171,29 @@ class Controlador{
         $this->bancoDeDados->excluirCarrinho($cod);
     }
 
-    public function cadastrarProduto($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tipo){
-
-        $produto = new Produto($nome,$fabricante,$descricao,$valor,$imagem,$sexo,$tipo);
+    public function cadastrarProduto($dados) {
+        switch ($dados['tipo']) {
+            case 'BOTA':
+                $produto = new Bota($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['altura_cano']);
+                break;
+            case 'CAMISA':
+                $produto = new Camisa($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['modelo'], $dados['cor']);
+                break;
+            case 'CHAPEU':
+                $produto = new Chapeu($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['estilo'], $dados['circunferencia']);
+                break;
+            case 'CINTO':
+                $produto = new Cinto($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['largura'], $dados['material_fivela']);
+                break;
+            default:
+                $produto = new Produto($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material']);
+                break;
+        }
+    
         $this->bancoDeDados->inserirProduto($produto);
     }
+    
+    
 
     public function cadastrarCliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha){
         $cliente  = new Cliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
