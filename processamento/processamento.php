@@ -87,6 +87,9 @@ if (
     if (move_uploaded_file($imagem_temp, $dados['imagem_destino'])) {
         $controlador->cadastrarProduto($dados);
         header('Location:../view/cadastroProduto.php');
+
+        //caso precise verificar os dados
+        //echo json_encode($dados);
         die();
     } else {
         echo "Erro ao fazer upload da imagem.";

@@ -38,7 +38,6 @@ class Controlador{
             }
             else
                 header('Location:../view/home.php');
-
         }
         else
         {
@@ -172,25 +171,13 @@ class Controlador{
     }
 
     public function cadastrarProduto($dados) {
-        switch ($dados['tipo']) {
-            case 'BOTA':
-                $produto = new Bota($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['altura_cano']);
-                break;
-            case 'CAMISA':
-                $produto = new Camisa($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['modelo'], $dados['cor']);
-                break;
-            case 'CHAPEU':
-                $produto = new Chapeu($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['estilo'], $dados['circunferencia']);
-                break;
-            case 'CINTO':
-                $produto = new Cinto($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['largura'], $dados['material_fivela']);
-                break;
-            default:
-                $produto = new Produto($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material']);
-                break;
+        $produto = FactoryProduto::factoryMethod($dados);
+        if($produto == null){
+            echo "Deu merda!";
         }
-    
-        $this->bancoDeDados->inserirProduto($produto);
+        else{
+            $this->bancoDeDados->inserirProduto($produto);
+        }
     }
     
     
@@ -225,6 +212,8 @@ class Controlador{
                     "<td>".
                         "<form method='post' action='../processamento/processamentoExcluirProduto.php'>".
                             "<input type='hidden' name='cod' value='". $produto["cod"] ."'>".
+                            "<input type='hidden' name='tipo' value='". $produto["tipo"] ."'>".
+
                             "<button class='btn btn-danger' type='submit' name='excluir_produto'>Excluir</button>". // Botão para excluir
                         "</form>".
                     "</td>".
@@ -365,8 +354,8 @@ class Controlador{
         return $cli;
     }
 
-    public function excluirProduto($cod){
-        $this->bancoDeDados->excluirProdutos($cod);
+    public function excluirProduto($cod,$tipo){
+        $this->bancoDeDados->excluirProdutos($cod,$tipo);
     }
 
 

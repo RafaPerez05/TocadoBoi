@@ -75,12 +75,23 @@ public function inserirCarrinho($carrinho) {
 }
 
 
+
 public function inserirProduto($produto) {
     $conexao = $this->conectarBD();
 
+    //INSERT INTO `produto`(`nome`, `fabricante`, `descricao`, `valor`, `cod`, `imagem_path`, `sexo`, `tipo`, `tamanho`, `material`)
     // Inserção na tabela produto
     $consulProd = "INSERT INTO produto (nome, fabricante, descricao, valor, imagem_path, sexo, tipo, tamanho, material) 
-                   VALUES ('{$produto->get_Nome()}', '{$produto->get_Fabricante()}', '{$produto->get_Descricao()}', '{$produto->get_Valor()}', '{$produto->get_Imagem()}', '{$produto->get_Sexo()}', '{$produto->get_Tipo()}', '{$produto->get_Tamanho()}', '{$produto->get_Material()}')";
+                   VALUES (
+                    '{$produto->get_Nome()}', 
+                    '{$produto->get_Fabricante()}', 
+                    '{$produto->get_Descricao()}', 
+                    '{$produto->get_Valor()}', 
+                    '{$produto->get_Imagem()}', 
+                    '{$produto->get_Sexo()}', 
+                    '{$produto->get_Tipo()}', 
+                    '{$produto->get_Tamanho()}', 
+                    '{$produto->get_Material()}')";
     if (mysqli_query($conexao, $consulProd)) {
         // Obtendo o ID do produto inserido
         $produtoId = mysqli_insert_id($conexao);
@@ -196,13 +207,22 @@ public function inserirProduto($produto) {
         return $Produto;
     }
 
-    public function excluirProdutos($cod){
+    public function excluirProdutos($cod,$tipo){
         $conexao = $this->conectarBD();
-        
-        $query = "DELETE FROM produto WHERE cod = $cod";
-        
+        $tipo = strtolower($tipo);
+        $query = "DELETE FROM $tipo WHERE produto_cod = $cod";
+
+
         if(mysqli_query($conexao, $query)){
             echo "Produto excluído com sucesso.";
+
+            $query = " DELETE FROM produto WHERE cod = $cod";
+                if(mysqli_query($conexao, $query)){
+                echo "Produto2 excluído com sucesso.";
+
+                }else{
+                echo "Erro ao excluir o produto: " . mysqli_error($conexao);
+                }
         } else{
             echo "Erro ao excluir o produto: " . mysqli_error($conexao);
         }
