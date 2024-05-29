@@ -5,8 +5,8 @@ class Bota extends Produto {
     private $alturaCano;
 
     // Construtor
-    public function __construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tamanho, $material, $tipo, $alturaCano) {
-        parent::__construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tamanho, $material, $tipo);
+    public function __construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tipo, $tamanho, $material, $alturaCano) {
+        parent::__construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tipo, $tamanho, $material);
         $this->alturaCano = $alturaCano;
     }
 

@@ -96,6 +96,7 @@ public function inserirProduto($produto) {
         // Obtendo o ID do produto inserido
         $produtoId = mysqli_insert_id($conexao);
 
+       echo $produto->get_Tipo(); 
         // Inserção nas tabelas específicas
         switch (get_class($produto)) {
             case 'Bota':

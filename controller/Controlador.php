@@ -219,8 +219,12 @@ class Controlador{
                     "</td>".
                     "<td>".
 
-                    //criar formulario aqui!!!
-                    "<a class='btn btn-warning openModalAlterar' name='alterar_produto'>Alterar</a>".
+                    "<form method='post' action='../processamento/processamentoAlterarProduto.php'>".
+                        "<input type='hidden' name='cod' value='". $produto["cod"] ."'>".
+                        "<input type='hidden' name='tipo' value='". $produto["tipo"] ."'>".
+                        
+                        "<button class='btn btn-warning openModalAlterar' name='alterar_produto'>Alterar</button>".
+                    "<form method='post' action='../processamento/processamentoAlterarProduto.php'>".
 
                     "</td>".
                 "</tr>".

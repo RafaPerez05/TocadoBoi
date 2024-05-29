@@ -16,7 +16,7 @@ class Produto{
 
 
     //Construtor
-    public function __construct($Nome,$Fabricante,$Descricao,$Valor,$Imagem,$Sexo, $Tamanho, $Material, $Tipo){
+    public function __construct($Nome,$Fabricante,$Descricao,$Valor,$Imagem,$Sexo,$Tipo, $Tamanho, $Material){
         $this->nome = $Nome;
         $this->fabricante = $Fabricante;
         $this->descricao = $Descricao;

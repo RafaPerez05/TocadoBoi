@@ -6,7 +6,7 @@ class Chapeu extends Produto {
     private $circunferencia;
 
     // Construtor
-    public function __construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tamanho, $material, $tipo, $estilo, $circunferencia) {
+    public function __construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo,  $tipo, $tamanho, $material, $estilo, $circunferencia) {
         parent::__construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tamanho, $material, $tipo);
         $this->estilo = $estilo;
         $this->circunferencia = $circunferencia;

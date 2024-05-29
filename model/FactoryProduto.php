@@ -10,7 +10,7 @@ class FactoryProduto {
     static function factoryMethod($dados) {
         switch ($dados['tipo']) {
             case 'BOTA':
-                return new Bota($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tamanho'], $dados['material'], $dados['tipo'], $dados['altura_cano']);
+                return new Bota($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['altura_cano']);
                 break;
             case 'CAMISA':
                 return new Camisa($dados['nome'], $dados['fabricante'], $dados['descricao'], $dados['valor'], $dados['imagem_destino'], $dados['sexo'], $dados['tipo'], $dados['tamanho'], $dados['material'], $dados['modelo'], $dados['cor']);

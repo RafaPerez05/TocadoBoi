@@ -6,8 +6,8 @@ class Camisa extends Produto {
     private $cor;
 
     // Construtor
-    public function __construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tamanho, $material, $tipo, $modelo, $cor) {
-        parent::__construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tamanho, $material, $tipo);
+    public function __construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tipo, $tamanho, $material, $modelo, $cor) {
+        parent::__construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tipo, $tamanho, $material,);
         $this->modelo = $modelo;
         $this->cor = $cor;
     }

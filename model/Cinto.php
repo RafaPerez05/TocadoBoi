@@ -6,8 +6,8 @@ class Cinto extends Produto {
     private $materialFivela;
 
     // Construtor
-    public function __construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tamanho, $material, $tipo, $largura, $materialFivela) {
-        parent::__construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tamanho, $material, $tipo);
+    public function __construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tipo, $tamanho, $material, $largura, $materialFivela) {
+        parent::__construct($nome, $fabricante, $descricao, $valor, $imagem, $sexo, $tipo, $tamanho, $material,);
         $this->largura = $largura;
         $this->materialFivela = $materialFivela;
     }
