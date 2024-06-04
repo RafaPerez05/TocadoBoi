@@ -191,6 +191,10 @@ class Controlador{
         $cliente  = new Cliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha);
         $this->bancoDeDados->alterarCliente($cliente);
     }
+
+    public function excluirCliente($cod){
+        $this->bancoDeDados->excluirCliente($cod);
+    }
                     
     public function cadastrarEndereco($cod,$inputUsuarioLogado, $inputCep, $inputRua, $inputNumero, $inputBairro, $inputComplemento){
         $endereco  = new Endereco($cod,$inputUsuarioLogado, $inputCep, $inputRua, $inputNumero, $inputBairro, $inputComplemento);
@@ -316,7 +320,7 @@ class Controlador{
 
 
                     "<td>".
-                        "<form method='post' action='../processamento/processamentoExcluirProduto.php'>".
+                        "<form method='post' action='../processamento/processamentoExcluirCliente.php'>".
                             "<input type='hidden' name='cod' value='". $cliente["cod"] ."'>".
 
                             "<button class='btn btn-danger' type='submit' name='excluir_produto'>Excluir</button>". // Botão para excluir

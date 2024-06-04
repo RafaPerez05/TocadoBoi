@@ -182,6 +182,24 @@ public function inserirProduto($produto) {
         $clienteLogado = mysqli_query($conexao,$consulta);
         return $clienteLogado;
     }
+
+    public function excluirCliente($cod){
+        $conexao = $this->conectarBD();
+        $query = "DELETE FROM endereco WHERE cod_cliente = $cod";
+
+        if(mysqli_query($conexao, $query)){
+            echo "Endereço excluído com sucesso.";
+            $query = " DELETE FROM cliente WHERE cod = $cod";
+                if(mysqli_query($conexao, $query)){
+                echo "Cliente excluído com sucesso.";
+
+                }else{
+                echo "Erro ao excluir o cliente: " . mysqli_error($conexao);
+                }
+        } else{
+            echo "Erro ao excluir o endereço: " . mysqli_error($conexao);
+        }
+    }
     
     public function retornarProdutos(){
         $conexao = $this->conectarBD();
