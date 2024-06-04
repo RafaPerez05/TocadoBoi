@@ -209,6 +209,8 @@ class Controlador{
                     "<td>". $produto["descricao"] ."</td>".
                     "<td>". $produto["valor"] ."</td>".
                     "<td>". $produto["sexo"] ."</td>".
+                    "<td>". $produto["tipo"] ."</td>".
+
                     "<td>".
                         "<form method='post' action='../processamento/processamentoExcluirProduto.php'>".
                             "<input type='hidden' name='cod' value='". $produto["cod"] ."'>".
@@ -223,8 +225,8 @@ class Controlador{
                         "<input type='hidden' name='cod' value='". $produto["cod"] ."'>".
                         "<input type='hidden' name='tipo' value='". $produto["tipo"] ."'>".
                         
-                        "<button class='btn btn-warning openModalAlterar' name='alterar_produto'>Alterar</button>".
-                    "<form method='post' action='../processamento/processamentoAlterarProduto.php'>".
+                        "<button class='btn btn-warning  type='submit' openModalAlterar' name='alterar_produto'>Alterar</button>".
+                    "</form>".
 
                     "</td>".
                 "</tr>".
@@ -300,20 +302,42 @@ class Controlador{
 
 
     public function visualizarClientes(){
-        $cli = "";
+        $cli="";
         $listaClientes = $this->bancoDeDados->retornarClientes();
         while($cliente = mysqli_fetch_assoc($listaClientes)){
-            $cli .= "<section class=\"conteudo-bloco\">
-            <h2>".$cliente['nome'].$cliente['sobrenome']."</h2>
-            <a>Cpf: ".$cliente['cpf']."</a><br>
-            <a>Data de Nascimento: ".$cliente['dataNascimento']."</a><br>
-            <a>Telefone: ".$cliente['telefone']."</a><br>
-            <a>Email: ".$cliente['email']."</a><br>
-            <a>Senha: ".$cliente['senha']."</a>
-            </section>"
-            ;
+            $cli .=
+                "<tr>".
+                    "<td>". $cliente["cod"] ."</td>".
+                    "<td>". $cliente["cpf"] ."</td>".
+                    "<td>".$cliente['nome']."</td>".
+                    "<td>".$cliente['sobrenome']."</td>".
+                    "<td>".$cliente['email']."</td>".
+                    "<td>".$cliente['telefone']."</td>".
+
+
+                    "<td>".
+                        "<form method='post' action='../processamento/processamentoExcluirProduto.php'>".
+                            "<input type='hidden' name='cod' value='". $cliente["cod"] ."'>".
+
+                            "<button class='btn btn-danger' type='submit' name='excluir_produto'>Excluir</button>". // Botão para excluir
+                        "</form>".
+                    "</td>".
+                    "<td>".
+
+                    "<form method='post' action='../processamento/processamentoAlterarProduto.php'>".
+                        "<input type='hidden' name='cod' value='". $cliente["cod"] ."'>".
+                        
+                        "<button class='btn btn-warning  type='submit' openModalAlterar' name='alterar_produto'>Alterar</button>".
+                    "</form>".
+
+                    "</td>".
+                "</tr>".
+                "</tbody>";
         }
-        return $cli;
+
+        return $cli ;
+
+
     }
     
     public function visualizarClienteLogado(){

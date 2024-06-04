@@ -2,6 +2,8 @@
 require_once "../controller/Controlador.php";
 include "layout/cabecalho.php";
 ?>
+
+
 <main>
     <!-- Modal -->
     <div id="myModal" class="modal">
@@ -108,7 +110,7 @@ include "layout/cabecalho.php";
                         </div>
                     </section>
 
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <button type="submit" class="btn btn-success">Cadastrar</button>
                 </form>
             </section>
         </div>
@@ -133,7 +135,7 @@ include "layout/cabecalho.php";
         <h3>Gerenciamento de Produtos</h3>
         <a class="btn btn-primary mb-3 openModal">Cadastrar novo produto</a>
 
-        <table class="table table-striped zebrado">
+        <table class="table table-borderless zebrado">
             <thead>
                 <tr>
                     <th>Cod</th>
@@ -142,6 +144,7 @@ include "layout/cabecalho.php";
                     <th>Descrição</th>
                     <th>Valor</th>
                     <th>Sexo</th>
+                    <th>Tipo</th>
                     <th></th>
                     <th></th>
                 </tr>

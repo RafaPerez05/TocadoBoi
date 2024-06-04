@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+
     <link rel="icon" href="../imagens/mylogo.png" type="image/png">
     <title>Toca do boi - Admin</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link rel="stylesheet" href="../css/indexAdm.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/form.css">
-    <link rel="stylesheet" href="../css/grid.css">
     <link rel="icon" type="image/png" href="../imagens/mylogo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -44,10 +45,8 @@
             <ul class="nav-list">
                 <li><a href="home.php">Início</a></li>
                 <li><a href="cadastroProduto.php">Gerenciamento de Produtos</a></li>
-                <li><a href="cadastroProduto.php">Gerenciamento de Clientes</a></li>
+                <li><a href="gerenciaCliente.php">Gerenciamento de Clientes</a></li>
                 <li><a href="../processamento/sair.php">Sair</a></li>
             </ul>
         </nav>
     </header>
-    <section class="slideshow">
-    </section>
