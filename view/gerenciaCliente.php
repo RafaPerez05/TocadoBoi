@@ -75,7 +75,6 @@ include "layout/cabecalho.php";
                     <th>Telefone</th>
 
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <?php

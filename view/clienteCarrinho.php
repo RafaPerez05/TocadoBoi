@@ -105,31 +105,53 @@ include "clienteLayout/cabecalho.php";
     });
 
 
-    //MODALLL 
-    //MODAL CADASTRO
+
+    // LINHA 109 a 156 ESSE CODIGO TODO SÓ P VER SE TEM O ENDEREÇO NESSA MERDA 
+    // MODAL CADASTRO
     var modalCad = document.getElementById("myModal");
     var btnsModalCad = document.querySelectorAll(".openModal");
     var spanCad = document.getElementsByClassName("close")[0];
 
-    //esconder o modal de cadastro de endereco
-    var codEndereco = document.getElementById("codEndereco")
-    var modalCadEndereco = document.getElementsByClassName("endereco")[0];
-    console.log(codEndereco.value)
+    // Verificação para modalCad
+    if (!modalCad) {
+        console.error('Elemento com id "myModal" não encontrado');
+    }
 
+    // Verificação para spanCad
+    if (!spanCad) {
+        console.error('Elemento com classe "close" não encontrado');
+    }
 
+    // Esconder o modal de cadastro de endereço
+    var codEndereco = document.getElementById("codEndereco");
+    var modalCadEndereco = document.getElementsByClassName("form-endereco")[0];
 
-    // Para cada botão de cadastro, adicionar um evento de clique para abrir o modal
+    // Verificação para codEndereco
+    if (!codEndereco) {
+        console.error('Elemento com id "codEndereco" não encontrado');
+    } else {
+        console.log(codEndereco.value);
+    }
+
+    // Verificação para modalCadEndereco
+    if (!modalCadEndereco) {
+        console.error('Elemento com classe "endereco" não encontrado');
+    }
+
     btnsModalCad.forEach(function(btn) {
         btn.onclick = function() {
+            if (!modalCad) return; // Verificação adicional
             modalCad.style.display = "block";
 
-            if (codEndereco.value == 0) {
-                modalCadEndereco.style.display = "block";
-
+            if (codEndereco && codEndereco.value != "") {
+                if (modalCadEndereco) {
+                    modalCadEndereco.style.display = "none";
+                }
             } else {
-                modalCadEndereco.style.display = "none";
+                if (modalCadEndereco) {
+                    modalCadEndereco.style.display = "block";
+                }
             }
-
         }
     });
 

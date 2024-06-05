@@ -119,6 +119,7 @@ class Controlador{
    "<span class='close'>"."&times;"."</span>".
     "<section class='conteudo-formulario-cadastro'>" .
         "<form action='../processamento/processamentoAddEndereco.php' method='POST' enctype='multipart/form-data'>" .
+        
         "<section class='form-endereco'>" .
             "<label>Dados do endereço para entrega</label>" .
             //codigo de usuario
@@ -220,7 +221,7 @@ class Controlador{
                             "<input type='hidden' name='cod' value='". $produto["cod"] ."'>".
                             "<input type='hidden' name='tipo' value='". $produto["tipo"] ."'>".
 
-                            "<button class='btn btn-danger' type='submit' name='excluir_produto'>Excluir</button>". // Botão para excluir
+                            "<button class='btn btn-danger' type='submit' name='excluir_produto'><i class='fa fa-trash'></i></button>". // Botão para excluir
                         "</form>".
                     "</td>".
                     "<td>".
@@ -323,18 +324,17 @@ class Controlador{
                         "<form method='post' action='../processamento/processamentoExcluirCliente.php'>".
                             "<input type='hidden' name='cod' value='". $cliente["cod"] ."'>".
 
-                            "<button class='btn btn-danger' type='submit' name='excluir_produto'>Excluir</button>". // Botão para excluir
+                            "<button class='btn btn-danger' type='submit' name='excluir_produto'><i class='fa fa-trash'></i></button>". // Botão para excluir
                         "</form>".
                     "</td>".
-                    "<td>".
 
-                    "<form method='post' action='../processamento/processamentoAlterarProduto.php'>".
-                        "<input type='hidden' name='cod' value='". $cliente["cod"] ."'>".
-                        
-                        "<button class='btn btn-warning  type='submit' openModalAlterar' name='alterar_produto'>Alterar</button>".
-                    "</form>".
-
-                    "</td>".
+                    // Adcionar depois de fazer a função para finalizar venda
+//                    "<td>".
+//                    "<form method='post' action='../processamento/processamentoAlterarProduto.php'>".
+//                        "<input type='hidden' name='cod' value='". $cliente["cod"] ."'>".                        
+//                        "<button class='btn btn-warning  type='submit' openModalAlterar' name='alterar_produto'>Alterar</button>".
+//                    "</form>".
+//                    "</td>".
                 "</tr>".
                 "</tbody>";
         }
