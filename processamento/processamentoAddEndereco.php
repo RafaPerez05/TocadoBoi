@@ -26,6 +26,6 @@ if (isset($_POST['inputUsuarioLogado']) &&
     
     $controlador->iniciarVenda($inputUsuarioLogado,$totalVazio,$dataAtual);
 
-    //header('Location:../view/clienteCarrinho.php');
+    header('Location:../view/clienteVerProduto.php');
     die();
 }

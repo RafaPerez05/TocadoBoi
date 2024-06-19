@@ -127,7 +127,7 @@ class Controlador{
         "<section class='form-endereco'>" .
             "<label>Dados do endereço para entrega</label>" .
             //codigo de usuario
-            "<input type='hidden' class='form-control' name='inputUsuarioLogado' value='".$usuarioLogado."'></input>" .
+            "<input type='hidden'class='form-control' name='inputUsuarioLogado' value='".$usuarioLogado."'></input>" .
             //codigo do endereco
             "<input type='hidden' id='codEndereco' class='form-control' name='inputEndereco' value='". $codEndereco."'></input>" .
 
@@ -397,9 +397,55 @@ class Controlador{
         $venda  = new Venda($cliente_cod, $valor_total, $data_venda);
         $listaProdutosCarrinho = $this->bancoDeDados->retornarProdutosCarrinho($usuarioLogado);
 
-        $this->bancoDeDados->iniciarVenda($venda,$listaProdutosCarrinho);
-        
+        if ($this->bancoDeDados->iniciarVenda($venda, $listaProdutosCarrinho)) {
+            $_SESSION['venda_efetuada'] = true;
+        } else {
+            $_SESSION['venda_efetuada'] = false;
+        }
     }
+
+    public function exibirRelatorioVendas() {
+        $relatorio = "";
+        $listaVendas = $this->bancoDeDados->retornarRelatorioVendas();
+        $totalVendas = 0;
+        $totalValor = 0;
+    
+        while ($venda = mysqli_fetch_assoc($listaVendas)) {
+            $totalVendas++;
+            $totalValor += $venda["valor_total"];
+            $dataVenda = date("d/m/Y", strtotime($venda["data_venda"]));
+    
+            $detalhesVenda = "<ul>";
+            $produtos = explode(", ", $venda["produtos"]);
+            $quantidades = explode(", ", $venda["quantidades"]);
+            $valoresTotais = explode(", ", $venda["valores_totais"]);
+            
+            for ($i = 0; $i < count($produtos); $i++) {
+                $detalhesVenda .= "<li>{$produtos[$i]} - Quantidade: {$quantidades[$i]} - Valor: R$ ". number_format($valoresTotais[$i], 2, ',', '.') ."</li>";
+            }
+            $detalhesVenda .= "</ul>";
+    
+            $relatorio .=
+                "<tr>".
+                    "<td>". $venda["venda_cod"] ."</td>".
+                    "<td>". $venda["cliente_nome"] . " " . $venda["cliente_sobrenome"] ."</td>".
+                    "<td>R$ ". number_format($venda["valor_total"], 2, ',', '.') ."</td>".
+                    "<td>". $dataVenda ."</td>".
+                    "<td>". $venda["rua"] . ", " . $venda["numero"] . ", " . $venda["bairro"] . ", " . $venda["cep"] ."</td>".
+                    "<td><button class='btn btn-info' type='button' data-toggle='collapse' data-target='#detalhes-".$venda["venda_cod"]."'>Ver Detalhes</button></td>".
+                "</tr>".
+                "<tr class='collapse' id='detalhes-".$venda["venda_cod"]."'>".
+                    "<td colspan='6'>".$detalhesVenda."</td>".
+                "</tr>";
+        }
+    
+        $totalizadores = "<tr><td colspan='2'><strong>Total de Vendas: </strong>{$totalVendas}</td><td colspan='4'><strong>Valor Total: </strong>R$ ". number_format($totalValor, 2, ',', '.') ."</td></tr>";
+    
+        return $totalizadores . $relatorio;
+    }
+    
+    
+    
 
 
 

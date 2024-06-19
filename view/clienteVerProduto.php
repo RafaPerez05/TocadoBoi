@@ -2,6 +2,20 @@
   require_once "../controller/Controlador.php";
   include "clienteLayout/cabecalho.php";
   session_start();
+
+  if (isset($_SESSION['venda_efetuada'])) {
+    $alertClass = $_SESSION['venda_efetuada'] ? 'success' : 'danger';
+    $alertMessage = $_SESSION['venda_efetuada'] ? 'Venda efetuada com sucesso!' : 'Erro ao efetuar a venda. Por favor, tente novamente.';
+?>
+<div id="alerta-venda"
+    class="alert alert-<?php echo $alertClass; ?> alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x"
+    role="alert">
+    <?php echo $alertMessage; ?>
+    <button type="button" class="btn-close" aria-label="Close"></button>
+</div>
+<?php
+    unset($_SESSION['venda_efetuada']);
+}
 ?>
 
 <form class="d-flex m-4">
@@ -68,6 +82,31 @@ searchInput.addEventListener('input', function() {
             productsList[i].style.display = 'none';
         }
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona o alerta pela classe e atribui uma transição
+    var alerta = document.getElementById('alerta-venda');
+    alerta.style.transition = 'transform 0.3s ease-in-out, opacity 0.5s ease';
+
+    // Fecha o alerta após 3 segundos
+    setTimeout(function() {
+        alerta.style.transform = 'translateX(100%)';
+        alerta.style.opacity = '0';
+        alerta.addEventListener('transitionend', function() {
+            alerta.remove();
+        });
+    }, 5000);
+
+    // Fecha o alerta ao clicar no botão de fechar
+    var btnFechar = alerta.querySelector('.btn-close');
+    btnFechar.addEventListener('click', function() {
+        alerta.style.transform = 'translateX(100%)';
+        alerta.style.opacity = '0';
+        alerta.addEventListener('transitionend', function() {
+            alerta.remove();
+        });
+    });
 });
 </script>
 

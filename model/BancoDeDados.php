@@ -269,7 +269,11 @@ public function inserirProduto($produto) {
         $conexao = $this->conectarBD();
         $consulta = "INSERT INTO endereco (cod_cliente, cep, rua, numero, bairro, complemento) 
                      VALUES ('{$endereco->get_cod_cliente()}','{$endereco->get_cep()}', '{$endereco->get_rua()}','{$endereco->get_numero()}','{$endereco->get_bairro()}','{$endereco->get_complemento()}')";
-        mysqli_query($conexao,$consulta);
+                if(mysqli_query($conexao, $consulta)){
+                    echo "Endereço cadastrado com sucesso.";
+                } else{
+                    echo "Erro ao cadastrar endereço: " . mysqli_error($conexao);
+                }
     }
 
     public function retornarEndereco($usuarioLogado){
@@ -376,6 +380,43 @@ public function inserirProduto($produto) {
         }
     }
     
+    public function retornarRelatorioVendas() {
+        $conexao = $this->conectarBD();
+
+        $sql = "
+            SELECT 
+                v.cod AS venda_cod, 
+                v.valor_total, 
+                v.data_venda, 
+                c.nome AS cliente_nome, 
+                c.sobrenome AS cliente_sobrenome, 
+                e.rua, 
+                e.numero, 
+                e.bairro, 
+                e.cep, 
+                GROUP_CONCAT(p.nome SEPARATOR ', ') AS produtos,
+                GROUP_CONCAT(iv.qtd SEPARATOR ', ') AS quantidades,
+                GROUP_CONCAT(iv.valorTotal SEPARATOR ', ') AS valores_totais
+            FROM 
+                vendas v
+                JOIN cliente c ON v.cliente_cod = c.cod
+                LEFT JOIN endereco e ON e.cod_cliente = c.cod
+                JOIN itensvenda iv ON v.cod = iv.codVenda
+                JOIN produto p ON iv.codProduto = p.cod
+            GROUP BY 
+                v.cod
+            ORDER BY 
+                v.data_venda DESC
+        ";
+    
+        $result = mysqli_query($conexao, $sql);
+    
+        if (!$result) {
+            die('Erro na consulta: ' . mysqli_error($conexao));
+        }
+    
+        return $result;
+    }
 
     
     
