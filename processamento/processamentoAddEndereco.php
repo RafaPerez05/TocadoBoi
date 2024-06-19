@@ -21,6 +21,11 @@ if (isset($_POST['inputUsuarioLogado']) &&
 
     $controlador->cadastrarEndereco($cod,$inputUsuarioLogado, $inputCep, $inputRua, $inputNumero, $inputBairro, $inputComplemento);
 
-    header('Location:../view/clienteCarrinho.php');
+    $totalVazio = 0;
+    $dataAtual = date("Y/m/d H:i:s");
+    
+    $controlador->iniciarVenda($inputUsuarioLogado,$totalVazio,$dataAtual);
+
+    //header('Location:../view/clienteCarrinho.php');
     die();
 }

@@ -143,9 +143,10 @@ include "clienteLayout/cabecalho.php";
             if (!modalCad) return; // Verificação adicional
             modalCad.style.display = "block";
 
-            if (codEndereco && codEndereco.value != "") {
+            if (codEndereco && codEndereco.value != 0) {
                 if (modalCadEndereco) {
-                    modalCadEndereco.style.display = "none";
+                    modalCadEndereco.style.display =
+                        "block"; // SE QUISER QUE O MODAL APRECA APENAS 1 vez clicar aqui!!!
                 }
             } else {
                 if (modalCadEndereco) {

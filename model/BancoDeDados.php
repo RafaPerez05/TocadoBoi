@@ -8,7 +8,7 @@ class BancoDeDados{
     private $senha;
     private $dataBase;
 
-    public function __construct($Host, $Login, $Senha, $DataBase){
+    private function __construct($Host, $Login, $Senha, $DataBase){
         $this->host = $Host;
         $this->login = $Login;
         $this->senha = $Senha;
@@ -210,7 +210,14 @@ public function inserirProduto($produto) {
     
     public function retornarProdutosCarrinho($usuarioLogado) {
         $conexao = $this->conectarBD();
-        $consulProd = "SELECT c.cod AS codigo_carrinho, p.nome AS nome_produto, p.imagem_path AS caminho_imagem, p.valor AS valor_produto, c.quantidade AS quantidade
+        $consulProd = "SELECT 
+        c.cod AS codigo_carrinho, 
+        p.nome AS nome_produto,
+        p.cod AS cod_produto, 
+        p.imagem_path AS caminho_imagem, 
+        p.valor AS valor_produto, 
+        c.quantidade AS quantidade
+        
                         FROM carrinho c
                         JOIN produto p ON c.produto_cod = p.cod
                         WHERE c.cliente_cod = '{$usuarioLogado}'";
@@ -279,6 +286,103 @@ public function inserirProduto($produto) {
             return null;
         }
     }
+
+    public function iniciarVenda($venda, $listaProdutosCarrinho) {
+        $conexao = $this->conectarBD();
+        
+        // Inserir a venda na tabela vendas
+        $query = "INSERT INTO vendas(cliente_cod, valor_total, data_venda) 
+                  VALUES (
+                  '{$venda->getClienteCod()}', 
+                  '{$venda->getValorTotal()}', 
+                  '{$venda->getDataVenda()}')";
+        
+        if (mysqli_query($conexao, $query)) {
+            // Obter o ID da venda recém-criada
+            $idVenda = mysqli_insert_id($conexao);
+            echo "Venda iniciada. ID da venda: " . $idVenda . "<br>";
+            
+            // Obter os produtos do carrinho
+            $listaProdutos = $this->retornarProdutosCarrinho($venda->getClienteCod());
+            
+            while ($produto = mysqli_fetch_assoc($listaProdutos)) {
+                if (is_array($produto)) {
+                    // Preparar os dados para inserção na tabela itensVenda
+                    $codProduto = $produto['cod_produto'];
+                    $qtd = $produto['quantidade'];
+                    $valorUnitario = $produto['valor_produto'];
+                    $valorTotal = $qtd * $valorUnitario;
+                    
+                    // Inserir o produto na tabela itensVenda
+                    $queryItem = "INSERT INTO itensVenda (codVenda, codProduto, qtd, valorUnitario, valorTotal) 
+                                  VALUES ('$idVenda', '$codProduto', '$qtd', '$valorUnitario', '$valorTotal')";
+                    
+                    if (!mysqli_query($conexao, $queryItem)) {
+                        echo "Problema ao inserir item na venda: " . mysqli_error($conexao) . "<br>";
+                    }
+                } else {
+                    echo "O produto não é um array.<br>";
+                }
+            }
+            
+            // Atualizar o valor total da venda
+            $this->atualizaValorVendas($idVenda);
+
+            // Limpar o carrinho do cliente após o registro da venda
+            $this->limparCarrinhoCliente($venda->getClienteCod());
+
+            
+            return true;
+        } else {
+            echo "Problema ao iniciar venda: " . mysqli_error($conexao);
+            return false;
+        }
+    }
+    
+    public function atualizaValorVendas($idVenda) {
+        $conexao = $this->conectarBD();
+        
+        // Calcular o total da venda
+        $queryTotal = "SELECT SUM(valorTotal) as somaTotal FROM itensVenda WHERE codVenda = '$idVenda'";
+        $result = mysqli_query($conexao, $queryTotal);
+        
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $totalDaVenda = floatval($row['somaTotal']);
+            
+            // Atualizar o valor total na tabela vendas
+            $queryUpdate = "UPDATE vendas SET valor_total = '$totalDaVenda' WHERE cod = '$idVenda'";
+            
+            if (!mysqli_query($conexao, $queryUpdate)) {
+                echo "Erro ao atualizar o valor total da venda: " . mysqli_error($conexao);
+            }
+        } else {
+            echo "Erro ao calcular o total da venda: " . mysqli_error($conexao);
+        }
+    }
+
+    public function limparCarrinhoCliente($clienteCod) {
+        $conexao = $this->conectarBD();
+    
+        // Query para deletar os produtos do carrinho do cliente
+        $query = "DELETE FROM carrinho WHERE cliente_cod = '$clienteCod'";
+    
+        if (mysqli_query($conexao, $query)) {
+            echo "Carrinho do cliente limpo com sucesso.<br>";
+            return true;
+        } else {
+            echo "Erro ao limpar carrinho do cliente: " . mysqli_error($conexao) . "<br>";
+            return false;
+        }
+    }
+    
+
+    
+    
+    
+    
+    
+    
     
     
 

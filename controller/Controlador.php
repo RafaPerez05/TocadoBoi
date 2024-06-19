@@ -120,6 +120,10 @@ class Controlador{
     "<section class='conteudo-formulario-cadastro'>" .
         "<form action='../processamento/processamentoAddEndereco.php' method='POST' enctype='multipart/form-data'>" .
         
+        //inputs para venda
+
+
+
         "<section class='form-endereco'>" .
             "<label>Dados do endereço para entrega</label>" .
             //codigo de usuario
@@ -153,15 +157,12 @@ class Controlador{
                 "<input type='text' class='form-control' name='inputComplemento' placeholder='Complemento (opcional)'>" .
             "</div>" .  
                   
-            "<button type='submit' class='btn btn-primary'>Cadastrar</button>" .
+            "<button type='submit' class='btn btn-primary'>Confirmar</button>" .
         "</section>" .
         "</form>" .
    "</section>" .
     "</div>" .
     "</div>";
-
-
-
 
         }
         return $prod;
@@ -388,6 +389,16 @@ class Controlador{
 
     public function excluirProduto($cod,$tipo){
         $this->bancoDeDados->excluirProdutos($cod,$tipo);
+    }
+
+    public function iniciarVenda($cliente_cod, $valor_total, $data_venda){
+        session_start();
+        $usuarioLogado = $_SESSION["cod"];
+        $venda  = new Venda($cliente_cod, $valor_total, $data_venda);
+        $listaProdutosCarrinho = $this->bancoDeDados->retornarProdutosCarrinho($usuarioLogado);
+
+        $this->bancoDeDados->iniciarVenda($venda,$listaProdutosCarrinho);
+        
     }
 
 

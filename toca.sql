@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23-Maio-2024 às 04:26
+-- Tempo de geração: 19-Jun-2024 às 03:32
 -- Versão do servidor: 10.4.11-MariaDB
 -- versão do PHP: 7.4.1
 
@@ -34,6 +34,13 @@ CREATE TABLE `bota` (
   `altura_cano` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `bota`
+--
+
+INSERT INTO `bota` (`cod_bota`, `produto_cod`, `altura_cano`) VALUES
+(11, 42, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +54,13 @@ CREATE TABLE `camisa` (
   `cor` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `camisa`
+--
+
+INSERT INTO `camisa` (`cod_camisa`, `produto_cod`, `modelo`, `cor`) VALUES
+(4, 41, 'Camiseta comum', 'Preta');
+
 -- --------------------------------------------------------
 
 --
@@ -59,6 +73,13 @@ CREATE TABLE `carrinho` (
   `produto_cod` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `carrinho`
+--
+
+INSERT INTO `carrinho` (`cod`, `cliente_cod`, `produto_cod`, `quantidade`) VALUES
+(71, 11, 42, 1);
 
 -- --------------------------------------------------------
 
@@ -115,9 +136,7 @@ INSERT INTO `cliente` (`cod`, `cpf`, `nome`, `sobrenome`, `dataNascimento`, `tel
 (5, '77700707007', 'Cristiano', 'Ronaldo', '1987-07-07', '18900070707', 'cr7@gmail.com', 'sete7'),
 (6, '77785295623', 'Beyoncé', 'Carter', '1981-09-04', '18996325852', 'beyonce_com_c@gmail.com', '123456'),
 (9, '11111111111', 'Igao', 'podpah', '2024-04-11', '(22) 22222-2222', 'igao@gmail.com', 'igao'),
-(11, '44444444444', 'Mitico', 'podpa', '2024-04-03', '(44) 44444-4444', 'mitico@gmail.com', 'mitico'),
-(14, '123', 'Yan Lindo', 'Andrade', '2024-04-05', '(18) 98161-7763', 'yan@gmail.com', '1'),
-(15, '88888888808', 'Miguel', 'Perez', '2024-04-18', '(18) 98161-7763', 'miguel@gmail.com', '123');
+(11, '44444444444', 'Mitico', 'podpa', '2024-04-03', '(44) 44444-4444', 'mitico@gmail.com', 'mitico');
 
 -- --------------------------------------------------------
 
@@ -134,14 +153,6 @@ CREATE TABLE `endereco` (
   `bairro` varchar(100) NOT NULL,
   `complemento` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `endereco`
---
-
-INSERT INTO `endereco` (`cod`, `cod_cliente`, `cep`, `rua`, `numero`, `bairro`, `complemento`) VALUES
-(1, 1, 19160000, 'Rua pinxinguinha número', 75, 'Jardim Horizonte', 'Bar do seu jao'),
-(2, 14, 1212121212, 'Pirapo ', 12, 'Bairro de Sao joao', '');
 
 -- --------------------------------------------------------
 
@@ -162,6 +173,31 @@ CREATE TABLE `funcionario` (
 
 INSERT INTO `funcionario` (`cod`, `nome`, `email`, `senha`) VALUES
 (2, 'Arthur', 'arthur@gmail.com', '123');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `itensvenda`
+--
+
+CREATE TABLE `itensvenda` (
+  `cod` int(11) NOT NULL,
+  `codVenda` int(11) DEFAULT NULL,
+  `codProduto` int(11) DEFAULT NULL,
+  `qtd` int(11) DEFAULT NULL,
+  `valorUnitario` decimal(10,2) DEFAULT NULL,
+  `valorTotal` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `itensvenda`
+--
+
+INSERT INTO `itensvenda` (`cod`, `codVenda`, `codProduto`, `qtd`, `valorUnitario`, `valorTotal`) VALUES
+(3, 43, 42, 1, '200.00', '200.00'),
+(4, 43, 41, 1, '200.00', '200.00'),
+(5, 44, 42, 1, '200.00', '200.00'),
+(6, 44, 41, 1, '200.00', '200.00');
 
 -- --------------------------------------------------------
 
@@ -187,7 +223,8 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`nome`, `fabricante`, `descricao`, `valor`, `cod`, `imagem_path`, `sexo`, `tipo`, `tamanho`, `material`) VALUES
-('Bota', 'Texas', 'Bota bota', 1445, 24, '../imagens/uploads/botabranca.jpeg', 'Feminino', 'BOTA', '38', 'Couro Sintetico');
+('Camiseta Preta', 'Texas farm', 'aaa', 200, 41, '../imagens/uploads/camisapretaTexas.png', 'Masculino', 'CAMISA', 'G', 'Algodão'),
+('Bota', 'eua', 'Bota bota', 200, 42, '../imagens/uploads/botabranca.jpeg', 'Feminino', 'BOTA', '38', 'Couro Sintetico');
 
 -- --------------------------------------------------------
 
@@ -198,11 +235,17 @@ INSERT INTO `produto` (`nome`, `fabricante`, `descricao`, `valor`, `cod`, `image
 CREATE TABLE `vendas` (
   `cod` int(11) NOT NULL,
   `cliente_cod` int(11) NOT NULL,
-  `produto_cod` int(11) NOT NULL,
-  `quantidade` int(11) NOT NULL,
   `valor_total` decimal(10,2) NOT NULL,
-  `data_venda` timestamp NOT NULL DEFAULT current_timestamp()
+  `data_venda` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `vendas`
+--
+
+INSERT INTO `vendas` (`cod`, `cliente_cod`, `valor_total`, `data_venda`) VALUES
+(43, 1, '400.00', '2024-06-19 00:46:44'),
+(44, 1, '400.00', '2024-06-19 03:29:58');
 
 --
 -- Índices para tabelas despejadas
@@ -265,6 +308,14 @@ ALTER TABLE `funcionario`
   ADD PRIMARY KEY (`cod`);
 
 --
+-- Índices para tabela `itensvenda`
+--
+ALTER TABLE `itensvenda`
+  ADD PRIMARY KEY (`cod`),
+  ADD KEY `codVenda` (`codVenda`),
+  ADD KEY `codProduto` (`codProduto`);
+
+--
 -- Índices para tabela `produto`
 --
 ALTER TABLE `produto`
@@ -275,8 +326,7 @@ ALTER TABLE `produto`
 --
 ALTER TABLE `vendas`
   ADD PRIMARY KEY (`cod`),
-  ADD KEY `cliente_cod` (`cliente_cod`),
-  ADD KEY `produto_cod` (`produto_cod`);
+  ADD KEY `cliente_cod` (`cliente_cod`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
@@ -286,19 +336,19 @@ ALTER TABLE `vendas`
 -- AUTO_INCREMENT de tabela `bota`
 --
 ALTER TABLE `bota`
-  MODIFY `cod_bota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_bota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `camisa`
 --
 ALTER TABLE `camisa`
-  MODIFY `cod_camisa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_camisa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `carrinho`
 --
 ALTER TABLE `carrinho`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT de tabela `chapeu`
@@ -322,7 +372,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de tabela `endereco`
 --
 ALTER TABLE `endereco`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `funcionario`
@@ -331,16 +381,22 @@ ALTER TABLE `funcionario`
   MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de tabela `itensvenda`
+--
+ALTER TABLE `itensvenda`
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Restrições para despejos de tabelas
@@ -385,11 +441,17 @@ ALTER TABLE `endereco`
   ADD CONSTRAINT `fk_cod_cliente` FOREIGN KEY (`cod_cliente`) REFERENCES `cliente` (`cod`);
 
 --
+-- Limitadores para a tabela `itensvenda`
+--
+ALTER TABLE `itensvenda`
+  ADD CONSTRAINT `itensvenda_ibfk_1` FOREIGN KEY (`codVenda`) REFERENCES `vendas` (`cod`),
+  ADD CONSTRAINT `itensvenda_ibfk_2` FOREIGN KEY (`codProduto`) REFERENCES `produto` (`cod`);
+
+--
 -- Limitadores para a tabela `vendas`
 --
 ALTER TABLE `vendas`
-  ADD CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`cliente_cod`) REFERENCES `cliente` (`cod`),
-  ADD CONSTRAINT `vendas_ibfk_2` FOREIGN KEY (`produto_cod`) REFERENCES `produto` (`cod`);
+  ADD CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`cliente_cod`) REFERENCES `cliente` (`cod`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
