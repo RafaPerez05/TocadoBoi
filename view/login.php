@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../css/login.css">
     <link rel="icon" href="../img/logo.png" type="image/png">
     <title>Toca do Boi</title>
+
 <body>
     <section class="conteudo-login">
         <section class="conteudo-formulario">
@@ -22,4 +24,5 @@
 
 
 </body>
+
 </html>

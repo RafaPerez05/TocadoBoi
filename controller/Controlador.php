@@ -127,7 +127,7 @@ class Controlador{
         "<section class='form-endereco'>" .
             "<label>Dados do endereço para entrega</label>" .
             //codigo de usuario
-            "<input type='hidden'class='form-control' name='inputUsuarioLogado' value='".$usuarioLogado."'></input>" .
+            "<input type='hidden' class='form-control' name='inputUsuarioLogado' value='".$usuarioLogado."'></input>" .
             //codigo do endereco
             "<input type='hidden' id='codEndereco' class='form-control' name='inputEndereco' value='". $codEndereco."'></input>" .
 
