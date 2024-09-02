@@ -6,6 +6,7 @@ require_once("../model/Carrinho.php");
 require_once("../model/Venda.php");
 require_once("../model/Endereco.php");
 require_once ("../model/FactoryProduto.php");
+require_once("../model/JsonToCsvAdapter.php");
 
 
 
@@ -443,12 +444,56 @@ class Controlador{
     
         return $totalizadores . $relatorio;
     }
-    
-    
-    
 
+    public function botoesBaixarRelatorio(){
+        $botoes = "";
+    
+        $botoes .=
+            "<div class='d-flex justify-content-center align-items-center'>".
+                    "<form method='post' action='../processamento/processamentoBaixarJson.php'>".
+                        "<input type='hidden' name='acao' value='baixarCsv'>".
+                        "<button type='submit' id='downloadCsv' class='btn btn-primary mx-2'>Baixar CSV</button>".
+                    "</form>".
+    
+                    "<form method='post' action='../processamento/processamentoBaixarJson.php'>".
+                        "<input type='hidden' name='acao' value='baixarJson'>".
+                        "<button type='submit' id='downloadJson' class='btn btn-secondary mx-2'>Baixar JSON</button>".
+                    "</form>".
+            "</div>";
+    
+        return $botoes;
+    }
 
+    public function gerarRelatoioJson(){
+        $jsonData = "";
 
+        if ($this->bancoDeDados->gerarJsonRelatorioVendas()) {
+            echo "Relatorio Gerado com sucesso!";
+            
+        } else {
+            echo "Falha ao gerar relatorio";
+        }
+
+    }
+
+    public function gerarCsvRelatorioVendas() {
+        // Obtém o JSON gerado
+        $jsonData = $this->bancoDeDados->gerarJsonRelatorioVendas();
+        
+        // Instancia o adaptador com os dados JSON
+        $adapter = new JsonToCsvAdapter($jsonData);
+        
+        // Define o caminho do arquivo CSV
+        
+        try {
+            // Converte JSON para CSV e salva o arquivo
+            $adapter->saveCsvToFile();
+            return 'Arquivo CSV gerado/atualizado com sucesso.';
+        } catch (Exception $e) {
+            return 'Erro: ' . $e->getMessage();
+        }
+    }
+    
 }
 
 ?>

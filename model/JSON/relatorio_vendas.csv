@@ -1,0 +1,8 @@
+venda_cod,valor_total,data_venda,cliente_nome,cliente_sobrenome,rua,numero,bairro,cep,produtos,quantidades,valores_totais
+52,200.00,"2024-06-20 14:09:12",Casimiro,Jose,"Rua pinxinguinha número",75,"Jardim Horizonte",19160000,"Bota, Bota, Bota","1, 1, 1","200.00, 200.00, 200.00"
+51,400.00,"2024-06-19 20:04:48",Bruno,Lima,"Rua terezinha",70,"Vila paulo roberto",19160000,"Camiseta Preta, Bota","1, 1","200.00, 200.00"
+50,200.00,"2024-06-19 18:20:26",Casimiro,Jose,"Rua pinxinguinha número",75,"Jardim Horizonte",19160000,"Camiseta Preta, Camiseta Preta, Camiseta Preta","1, 1, 1","200.00, 200.00, 200.00"
+49,400.00,"2024-06-19 05:27:59",Igao,podpah,"Rua dos igors",74,"Mata atlantica",2147483647,"Camiseta Preta, Bota","1, 1","200.00, 200.00"
+48,200.00,"2024-06-19 05:26:37",Mitico,podpa,"Rua da miticagem",32,Rocinha,2147483647,Bota,1,200.00
+44,400.00,"2024-06-19 03:29:58",Casimiro,Jose,"Rua pinxinguinha número",75,"Jardim Horizonte",19160000,"Bota, Camiseta Preta, Bota, Camiseta Preta, Bota, Camiseta Preta","1, 1, 1, 1, 1, 1","200.00, 200.00, 200.00, 200.00, 200.00, 200.00"
+43,400.00,"2024-06-19 00:46:44",Casimiro,Jose,"Rua pinxinguinha número",75,"Jardim Horizonte",19160000,"Bota, Camiseta Preta, Bota, Camiseta Preta, Bota, Camiseta Preta","1, 1, 1, 1, 1, 1","200.00, 200.00, 200.00, 200.00, 200.00, 200.00"

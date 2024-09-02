@@ -418,6 +418,35 @@ public function inserirProduto($produto) {
         return $result;
     }
 
+    public function gerarJsonRelatorioVendas() {
+        // Chama a função para obter os dados
+        $result = $this->retornarRelatorioVendas();
+        
+        // Inicializa um array para armazenar os dados
+        $dados = array();
+        
+        // Itera sobre o resultado e converte cada linha em um array associativo
+        while ($row = mysqli_fetch_assoc($result)) {
+            $dados[] = $row;
+        }
+        
+        // Converte o array em JSON
+        $json_data = json_encode($dados, JSON_PRETTY_PRINT); // JSON_PRETTY_PRINT para formatar o JSON com indentação
+        
+        // Especifica o caminho do arquivo na pasta /JSON/
+        $caminhoArquivo = __DIR__ . '/JSON/relatorio_vendas.json';
+        
+        // Abre o arquivo para escrita (cria ou substitui)
+        if (file_put_contents($caminhoArquivo, $json_data) === false) {
+            return 'Erro ao escrever o arquivo JSON.';
+        }
+        
+        return $json_data;
+    }
+    
+    
+    
+
     
     
     
