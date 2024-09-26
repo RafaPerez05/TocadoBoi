@@ -25,11 +25,33 @@
 
 
         <style>
+        /* Estilização para o ícone do carrinho e o círculo de notificação */
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
 
+        .nav-list li {
+            margin-right: 20px;
+            position: relative; /* Necessário para o posicionamento absoluto do círculo */
+        }
 
+        /* Estilização do círculo */
+        .cart-badge {
+            position: absolute;
+            bottom: 0; /* Alinha ao canto inferior esquerdo */
+            left: 0;
+            background-color: red;
+            color: white;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 10px;
+        }
+    </style>
+    
 
-
-        </style>
 </head>
 
 <body>
@@ -54,7 +76,12 @@
 
             <ul class="nav-list">
                 <li><a href="clienteVerProduto.php">Produtos</a></li>
-                <li><a href="clienteCarrinho.php"><i class="fa fa-shopping-cart"> </i></a></li>
+                <li>
+                    <a href="clienteCarrinho.php">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span> <!-- Círculo com o número -->
+                    </a>
+                </li>
                 <li><a href="clienteGerenciaUsuario.php"><i class="fa fa-user"></i></a></li>
                 <li><a href="../processamento/sair.php">Sair</a></li>
             </ul>

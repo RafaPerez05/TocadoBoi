@@ -499,8 +499,8 @@ class Controlador{
         $quantidade = mysqli_fetch_assoc($quantidade);
 
         $input .=
-                "<form method='post' action=''>".
-                    "<input type='hidden' name='quantidadeCarrinho' value='" . $quantidade["total_produtos"] ."'>".
+                "<form id='quantidadeForm' method='post' action=''>".
+                    "<input type='hidden' name='quantidadeCarrinhoBanco' value='" . $quantidade["total_produtos"] ."'>".
                 "</form>";
 
     return $input;
