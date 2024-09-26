@@ -4,8 +4,8 @@ require_once "../controller/Controlador.php";
 session_start();
 ?>
 
-<div class="container-fluid">
-    <h1 class="mt-5">Relatório de Vendas</h1>
+<div class="container-md bg-white opacity-75 rounded-3 p-4 mt-3">
+    <h1 class="mt-2">Relatório de Vendas</h1>
         <?php
         $controlador = new Controlador();
         echo $controlador->botoesBaixarRelatorio();

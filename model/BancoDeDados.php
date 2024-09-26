@@ -444,6 +444,23 @@ public function inserirProduto($produto) {
         return $json_data;
     }
     
+    public function retornarQuantidadeCarrinho($usuarioLogado){
+        $conexao = $this->conectarBD();
+
+        $sql = "
+            SELECT cliente_cod, COUNT(produto_cod) AS total_produtos
+            FROM carrinho
+           	WHERE cliente_cod = '$usuarioLogado';
+        ";
+    
+        $quantidade = mysqli_query($conexao, $sql);
+    
+        if (!$quantidade) {
+            die('Erro na consulta: ' . mysqli_error($conexao));
+        }
+    
+        return $quantidade;
+    }
     
     
 

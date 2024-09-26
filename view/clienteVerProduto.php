@@ -1,11 +1,13 @@
 <?php
   require_once "../controller/Controlador.php";
   include "clienteLayout/cabecalho.php";
-  session_start();
 
-  if (isset($_SESSION['venda_efetuada'])) {
-    $alertClass = $_SESSION['venda_efetuada'] ? 'success' : 'danger';
-    $alertMessage = $_SESSION['venda_efetuada'] ? 'Venda efetuada com sucesso!' : 'Erro ao efetuar a venda. Por favor, tente novamente.';
+  // Acessando a sessão via SessionManager
+  $vendaEfetuada = SessionManager::get("venda_efetuada");
+
+  if (isset($vendaEfetuada)) {
+    $alertClass = $vendaEfetuada ? 'success' : 'danger';
+    $alertMessage = $vendaEfetuada ? 'Venda efetuada com sucesso!' : 'Erro ao efetuar a venda. Por favor, tente novamente.';
 ?>
 <div id="alerta-venda"
     class="alert alert-<?php echo $alertClass; ?> alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x"
@@ -14,7 +16,8 @@
     <button type="button" class="btn-close" aria-label="Close"></button>
 </div>
 <?php
-    unset($_SESSION['venda_efetuada']);
+    // Removendo a sessão com SessionManager
+    SessionManager::remove("venda_efetuada");
 }
 ?>
 

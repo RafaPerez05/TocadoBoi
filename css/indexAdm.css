@@ -4,7 +4,7 @@
   padding: 0;
 }
 body {
-  background-image: url("../imagens/madeira.jpg");
+   background-image: url("../imagens/branco.jpg");
   background-size: cover;
 }
 
@@ -497,3 +497,4 @@ nav a {
 .square p {
   font-size: 1rem; /* Reduzindo o tamanho do texto */
 }
+

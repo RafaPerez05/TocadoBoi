@@ -7,6 +7,7 @@ require_once("../model/Venda.php");
 require_once("../model/Endereco.php");
 require_once ("../model/FactoryProduto.php");
 require_once("../model/JsonToCsvAdapter.php");
+require_once("../model/SessionManager.php");
 
 
 
@@ -22,33 +23,28 @@ class Controlador{
         $this->bancoDeDados = BancoDeDados::getInstance();
     }
 
-    public function verificaLogin($email,$senha){
-        $usuarioLogado = $this->bancoDeDados->verificaLoginBD($email,$senha);
-        session_destroy();
-        if (session_status() == PHP_SESSION_NONE)
-        {
-            session_start();
-        }
-
-        if(!empty($usuarioLogado[0]))
-        {
-            $_SESSION["cod"] = $usuarioLogado[0]['cod'];
-            $_SESSION["nome"] = $usuarioLogado[0]['nome'];
-            if($usuarioLogado[1] == "cliente"){
+    public function verificaLogin($email, $senha) {
+        $usuarioLogado = $this->bancoDeDados->verificaLoginBD($email, $senha);
+        
+        // Destruir a sessão anterior, se houver
+        SessionManager::destroySession();
+    
+        if (!empty($usuarioLogado[0])) {
+            // Corrigido o uso do set
+            SessionManager::set("cod", $usuarioLogado[0]['cod']);
+            SessionManager::set("nome", $usuarioLogado[0]['nome']);
+    
+            if ($usuarioLogado[1] == "cliente") {
                 header('Location:../view/clienteVerProduto.php');
-            }
-            else
+            } else {
                 header('Location:../view/home.php');
-        }
-        else
-        {
+            }
+        } else {
             echo "tratamento de erros";
         }
-        
-
-        
-
     }
+    
+
 
     public function adcionarCarrinho($cliente_cod,$produto_cod,$quantidade){
         $carrinho = new Carrinho($cliente_cod,$produto_cod,$quantidade);
@@ -56,9 +52,8 @@ class Controlador{
     }
 
     public function visualizarProdutosCarrinho(){
-        session_start();
         $prod="";
-        $usuarioLogado = $_SESSION["cod"];
+        $usuarioLogado = SessionManager::get("cod");
         $endereco = $this->bancoDeDados->retornarEndereco($usuarioLogado);
         if ($endereco !== null) {
             $codEndereco = $endereco['cod'];
@@ -283,6 +278,7 @@ class Controlador{
     }
     public function visualizarProdutosGrid(){
         $prod="";
+        $codCliente = SessionManager::get("cod");
         $listaProdutos = $this->bancoDeDados->retornarProdutos();
         while($produto = mysqli_fetch_assoc($listaProdutos)){
             $prod .=
@@ -296,7 +292,7 @@ class Controlador{
                 "<form action='../processamento/processamentoVendas.php' method='post'>".           
                 //Adiciona um formulário ao redor do botão
                     "<input type='hidden' name='produto_cod' value='". $produto["cod"] ."'>". // Adiciona um campo oculto com o nome do produto
-                    "<input  type='hidden' name='cliente_cod' value='". $_SESSION["cod"] ."'>". // 
+                    "<input  type='hidden' name='cliente_cod' value='". $codCliente ."'>". // 
                     "<input type='hidden' name='valor_total' value='". $produto["valor"] ."'>". // Adiciona um campo oculto com o valor total
                     "<input type='hidden' name='quantidade' value='" . "1" . "'>".
                     "<button type='submit' class='btn btn-warning btn-add-to-cart'>Adicionar ao Carrinho <i class='fa fa-shopping-cart'></i></button>". // Botão submit
@@ -348,7 +344,7 @@ class Controlador{
     
     public function visualizarClienteLogado(){
         $cli = "";
-        $usuarioLogado = $_SESSION["cod"];
+        $usuarioLogado = SessionManager::get("cod");
         $listaClientes = $this->bancoDeDados->retornarClienteLogado($usuarioLogado);
         while($cliente = mysqli_fetch_assoc($listaClientes)){
             $cli .= 
@@ -392,18 +388,20 @@ class Controlador{
         $this->bancoDeDados->excluirProdutos($cod,$tipo);
     }
 
-    public function iniciarVenda($cliente_cod, $valor_total, $data_venda){
-        session_start();
-        $usuarioLogado = $_SESSION["cod"];
+    public function iniciarVenda($cliente_cod, $valor_total, $data_venda) {
+        $usuarioLogado = SessionManager::get("cod");
         $venda  = new Venda($cliente_cod, $valor_total, $data_venda);
         $listaProdutosCarrinho = $this->bancoDeDados->retornarProdutosCarrinho($usuarioLogado);
-
+    
         if ($this->bancoDeDados->iniciarVenda($venda, $listaProdutosCarrinho)) {
-            $_SESSION['venda_efetuada'] = true;
+            // Corrigido o uso do set
+            SessionManager::set("venda_efetuada", true);
         } else {
-            $_SESSION['venda_efetuada'] = false;
+            // Corrigido o uso do set
+            SessionManager::set("venda_efetuada", false);
         }
     }
+    
 
     public function exibirRelatorioVendas() {
         $relatorio = "";
@@ -492,6 +490,21 @@ class Controlador{
         } catch (Exception $e) {
             return 'Erro: ' . $e->getMessage();
         }
+    }
+
+    public function exibirQuantidadeCarrinho(){
+        $input = "";
+        $usuarioLogado =  SessionManager::get("cod");
+        $quantidade = $this->bancoDeDados->retornarQuantidadeCarrinho($usuarioLogado);
+        $quantidade = mysqli_fetch_assoc($quantidade);
+
+        $input .=
+                "<form method='post' action=''>".
+                    "<input type='hidden' name='quantidadeCarrinho' value='" . $quantidade["total_produtos"] ."'>".
+                "</form>";
+
+    return $input;
+
     }
     
 }

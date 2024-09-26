@@ -23,9 +23,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+
+        <style>
+
+
+
+
+        </style>
 </head>
 
 <body>
+    <?php
+        $controlador = new Controlador();
+        echo $controlador->exibirQuantidadeCarrinho();
+    ?>
+
 
     <header class="cabeça">
         <nav>
@@ -42,11 +54,9 @@
 
             <ul class="nav-list">
                 <li><a href="clienteVerProduto.php">Produtos</a></li>
-                <li><a href="clienteCarrinho.php"><i class="fa fa-shopping-cart"></i></a></li>
+                <li><a href="clienteCarrinho.php"><i class="fa fa-shopping-cart"> </i></a></li>
                 <li><a href="clienteGerenciaUsuario.php"><i class="fa fa-user"></i></a></li>
                 <li><a href="../processamento/sair.php">Sair</a></li>
-
-
             </ul>
         </nav>
     </header>

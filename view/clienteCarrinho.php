@@ -27,7 +27,7 @@ include "clienteLayout/cabecalho.php";
                     <h5 class="text-uppercase font-weight-normal">Itens do carrinho</h5>
                     <?php
                     $controlador = new Controlador();
-                    echo $controlador->visualizarProdutosCarrinho();
+                        echo $controlador->visualizarProdutosCarrinho();
                     ?>
                 </div>
             </div>

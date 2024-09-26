@@ -23,6 +23,10 @@ class JsonToCsvAdapter {
 
         // Adiciona os dados
         foreach ($data as $row) {
+            // Encapsula os campos que contêm múltiplos valores com aspas
+            $row['produtos'] = '"' . implode(", ", $row['produtos']) . '"';
+            $row['quantidades'] = '"' . implode(", ", $row['quantidades']) . '"';
+            $row['valores_totais'] = '"' . implode(", ", $row['valores_totais']) . '"';
             fputcsv($output, $row);
         }
 
@@ -37,8 +41,7 @@ class JsonToCsvAdapter {
     }
 
     public function saveCsvToFile() {
-
-        $filePath =  __DIR__ . '/JSON/relatorio_vendas.csv';
+        $filePath = __DIR__ . '/JSON/relatorio_vendas.csv';
         $csvData = $this->convertToCsv();
 
         // Salva o CSV em um arquivo
