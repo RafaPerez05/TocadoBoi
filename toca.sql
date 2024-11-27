@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03-Set-2024 às 20:15
--- Versão do servidor: 10.4.11-MariaDB
--- versão do PHP: 7.4.1
+-- Tempo de geração: 27-Nov-2024 às 22:21
+-- Versão do servidor: 10.4.32-MariaDB
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,7 +31,7 @@ CREATE TABLE `bota` (
   `cod_bota` int(11) NOT NULL,
   `produto_cod` int(11) NOT NULL,
   `altura_cano` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `bota`
@@ -52,14 +51,16 @@ CREATE TABLE `camisa` (
   `produto_cod` int(11) NOT NULL,
   `modelo` varchar(50) NOT NULL,
   `cor` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `camisa`
 --
 
 INSERT INTO `camisa` (`cod_camisa`, `produto_cod`, `modelo`, `cor`) VALUES
-(4, 41, 'Camiseta comum', 'Preta');
+(4, 41, 'Camiseta comum', 'Preta'),
+(5, 43, 'Polo', 'Preta'),
+(6, 44, 'Jaqueta', 'Preta');
 
 -- --------------------------------------------------------
 
@@ -72,14 +73,14 @@ CREATE TABLE `carrinho` (
   `cliente_cod` int(11) NOT NULL,
   `produto_cod` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `carrinho`
 --
 
 INSERT INTO `carrinho` (`cod`, `cliente_cod`, `produto_cod`, `quantidade`) VALUES
-(78, 1, 42, 1);
+(81, 1, 43, 1);
 
 -- --------------------------------------------------------
 
@@ -92,7 +93,7 @@ CREATE TABLE `chapeu` (
   `produto_cod` int(11) NOT NULL,
   `estilo` varchar(50) NOT NULL,
   `circunferencia` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,7 @@ CREATE TABLE `cinto` (
   `produto_cod` int(11) NOT NULL,
   `largura` decimal(5,2) NOT NULL,
   `material_fivela` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -122,7 +123,7 @@ CREATE TABLE `cliente` (
   `telefone` varchar(15) NOT NULL,
   `email` varchar(50) NOT NULL,
   `senha` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `cliente`
@@ -143,6 +144,31 @@ INSERT INTO `cliente` (`cod`, `cpf`, `nome`, `sobrenome`, `dataNascimento`, `tel
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `cupons`
+--
+
+CREATE TABLE `cupons` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `tipo` enum('BlackFriday','Natal2024') NOT NULL,
+  `desconto` decimal(10,2) NOT NULL,
+  `data_criacao` datetime DEFAULT current_timestamp(),
+  `data_expiracao` datetime NOT NULL,
+  `status` enum('ativo','inativo') DEFAULT 'ativo'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `cupons`
+--
+
+INSERT INTO `cupons` (`id`, `nome`, `tipo`, `desconto`, `data_criacao`, `data_expiracao`, `status`) VALUES
+(1, 'BlackFriday', 'BlackFriday', 30.00, '2024-11-27 16:20:03', '2024-12-27 16:20:03', 'ativo'),
+(2, 'teste10', 'Natal2024', 10.00, '2024-11-27 16:32:06', '2024-12-27 16:32:06', 'ativo'),
+(3, 'teste15', 'Natal2024', 300.00, '2024-11-27 16:53:36', '2024-12-27 16:53:36', 'ativo');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `endereco`
 --
 
@@ -154,19 +180,16 @@ CREATE TABLE `endereco` (
   `numero` int(11) NOT NULL,
   `bairro` varchar(100) NOT NULL,
   `complemento` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `endereco`
 --
 
 INSERT INTO `endereco` (`cod`, `cod_cliente`, `cep`, `rua`, `numero`, `bairro`, `complemento`) VALUES
-(1, 1, 19160000, 'Rua pinxinguinha número', 75, 'Jardim Horizonte', ''),
 (2, 11, 2147483647, 'Rua da miticagem', 32, 'Rocinha', ''),
 (3, 9, 2147483647, 'Rua dos igors', 74, 'Mata atlantica', 'Longe viu'),
-(4, 1, 19160000, 'Rua pinxinguinha número', 75, 'Jardim Horizonte', 'yan lindo'),
-(5, 17, 19160000, 'Rua terezinha', 70, 'Vila paulo roberto', 'Dentro da faculdade'),
-(6, 1, 19160000, 'Rua pinxinguinha número', 75, 'Jardim Horizonte', 'teste 20');
+(5, 17, 19160000, 'Rua terezinha', 70, 'Vila paulo roberto', 'Dentro da faculdade');
 
 -- --------------------------------------------------------
 
@@ -179,7 +202,7 @@ CREATE TABLE `funcionario` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(140) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `funcionario`
@@ -201,24 +224,26 @@ CREATE TABLE `itensvenda` (
   `qtd` int(11) DEFAULT NULL,
   `valorUnitario` decimal(10,2) DEFAULT NULL,
   `valorTotal` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `itensvenda`
 --
 
 INSERT INTO `itensvenda` (`cod`, `codVenda`, `codProduto`, `qtd`, `valorUnitario`, `valorTotal`) VALUES
-(3, 43, 42, 1, '200.00', '200.00'),
-(4, 43, 41, 1, '200.00', '200.00'),
-(5, 44, 42, 1, '200.00', '200.00'),
-(6, 44, 41, 1, '200.00', '200.00'),
-(7, 48, 42, 1, '200.00', '200.00'),
-(8, 49, 41, 1, '200.00', '200.00'),
-(9, 49, 42, 1, '200.00', '200.00'),
-(10, 50, 41, 1, '200.00', '200.00'),
-(11, 51, 41, 1, '200.00', '200.00'),
-(12, 51, 42, 1, '200.00', '200.00'),
-(13, 52, 42, 1, '200.00', '200.00');
+(3, 43, 42, 1, 200.00, 200.00),
+(4, 43, 41, 1, 200.00, 200.00),
+(5, 44, 42, 1, 200.00, 200.00),
+(6, 44, 41, 1, 200.00, 200.00),
+(7, 48, 42, 1, 200.00, 200.00),
+(8, 49, 41, 1, 200.00, 200.00),
+(9, 49, 42, 1, 200.00, 200.00),
+(10, 50, 41, 1, 200.00, 200.00),
+(11, 51, 41, 1, 200.00, 200.00),
+(12, 51, 42, 1, 200.00, 200.00),
+(13, 52, 42, 1, 200.00, 200.00),
+(14, 53, 44, 1, 1200.00, 1200.00),
+(15, 54, 44, 1, 1200.00, 1200.00);
 
 -- --------------------------------------------------------
 
@@ -237,7 +262,7 @@ CREATE TABLE `produto` (
   `tipo` varchar(50) NOT NULL,
   `tamanho` varchar(100) NOT NULL,
   `material` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `produto`
@@ -245,7 +270,9 @@ CREATE TABLE `produto` (
 
 INSERT INTO `produto` (`nome`, `fabricante`, `descricao`, `valor`, `cod`, `imagem_path`, `sexo`, `tipo`, `tamanho`, `material`) VALUES
 ('Camiseta Preta', 'Texas farm', 'aaa', 200, 41, '../imagens/uploads/camisapretaTexas.png', 'Masculino', 'CAMISA', 'G', 'Algodão'),
-('Bota', 'eua', 'Bota bota', 200, 42, '../imagens/uploads/botabranca.jpeg', 'Feminino', 'BOTA', '38', 'Couro Sintetico');
+('Bota', 'eua', 'Bota bota', 200, 42, '../imagens/uploads/botabranca.jpeg', 'Feminino', 'BOTA', '38', 'Couro Sintetico'),
+('Camisa', 'heregin', 'Camiseta básica preta', 100, 43, '../imagens/uploads/camisa_polo_50_algodao_50_dry_tradicional_jardel_preto_jardel_atacadao_000041H.jpg', 'Masculino', 'CAMISA', 'G', 'Algodão'),
+('Jaqueta Couro Preta', 'couro rafael', 'Linda jaqueta de couro legitimo', 1200, 44, '../imagens/uploads/images.jpg', 'Masculino', 'CAMISA', 'M', 'Couro');
 
 -- --------------------------------------------------------
 
@@ -258,23 +285,25 @@ CREATE TABLE `vendas` (
   `cliente_cod` int(11) NOT NULL,
   `valor_total` decimal(10,2) NOT NULL,
   `data_venda` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `vendas`
 --
 
 INSERT INTO `vendas` (`cod`, `cliente_cod`, `valor_total`, `data_venda`) VALUES
-(43, 1, '400.00', '2024-06-19 00:46:44'),
-(44, 1, '400.00', '2024-06-19 03:29:58'),
-(45, 1, '0.00', '2024-06-19 04:55:18'),
-(46, 1, '0.00', '2024-06-19 04:55:20'),
-(47, 1, '0.00', '2024-06-19 04:59:46'),
-(48, 11, '200.00', '2024-06-19 05:26:37'),
-(49, 9, '400.00', '2024-06-19 05:27:59'),
-(50, 1, '200.00', '2024-06-19 18:20:26'),
-(51, 17, '400.00', '2024-06-19 20:04:48'),
-(52, 1, '200.00', '2024-06-20 14:09:12');
+(43, 1, 400.00, '2024-06-19 00:46:44'),
+(44, 1, 400.00, '2024-06-19 03:29:58'),
+(45, 1, 0.00, '2024-06-19 04:55:18'),
+(46, 1, 0.00, '2024-06-19 04:55:20'),
+(47, 1, 0.00, '2024-06-19 04:59:46'),
+(48, 11, 200.00, '2024-06-19 05:26:37'),
+(49, 9, 400.00, '2024-06-19 05:27:59'),
+(50, 1, 200.00, '2024-06-19 18:20:26'),
+(51, 17, 400.00, '2024-06-19 20:04:48'),
+(52, 1, 200.00, '2024-06-20 14:09:12'),
+(53, 1, 1200.00, '2024-11-26 00:27:33'),
+(54, 1, 1200.00, '2024-11-27 20:36:37');
 
 --
 -- Índices para tabelas despejadas
@@ -324,6 +353,12 @@ ALTER TABLE `cliente`
   ADD UNIQUE KEY `cpf` (`cpf`);
 
 --
+-- Índices para tabela `cupons`
+--
+ALTER TABLE `cupons`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `endereco`
 --
 ALTER TABLE `endereco`
@@ -371,13 +406,13 @@ ALTER TABLE `bota`
 -- AUTO_INCREMENT de tabela `camisa`
 --
 ALTER TABLE `camisa`
-  MODIFY `cod_camisa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cod_camisa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `carrinho`
 --
 ALTER TABLE `carrinho`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT de tabela `chapeu`
@@ -398,10 +433,16 @@ ALTER TABLE `cliente`
   MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT de tabela `cupons`
+--
+ALTER TABLE `cupons`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `endereco`
 --
 ALTER TABLE `endereco`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `funcionario`
@@ -413,19 +454,19 @@ ALTER TABLE `funcionario`
 -- AUTO_INCREMENT de tabela `itensvenda`
 --
 ALTER TABLE `itensvenda`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- Restrições para despejos de tabelas

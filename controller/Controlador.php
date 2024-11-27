@@ -152,6 +152,7 @@ class Controlador{
                 "<label for='Complemento' class='form-label'>Complemento</label>" .
                 "<input type='text' class='form-control' name='inputComplemento' placeholder='Complemento (opcional)'>" .
             "</div>" .  
+            
                   
             "<button type='submit' class='btn btn-primary'>Confirmar</button>" .
         "</section>" .
@@ -161,6 +162,15 @@ class Controlador{
     "</div>";
 
         }
+        // Adicionando o campo de cupom
+$prod .=
+"<form action='../processamento/processamentoCupom.php' method='POST' enctype='multipart/form-data'>" .
+
+"<div class='d-flex flex-row justify-content-center align-items-center mt-4'>" .
+"<input type='text' name='nomeCupom' id='couponCode' class='form-control' placeholder='Insira seu cupom' style='max-width: 300px; margin-right: 10px;'>" .
+"<button id='applyCoupon' type='submit class='btn btn-primary'>Aplicar Cupom</button>" .
+"</div>" .
+"</form>" ;
         return $prod;
     }
 
@@ -178,6 +188,13 @@ class Controlador{
         }
     }
     
+    public function cadastrarCupom($cupom) {
+        $nomeCupom = $cupom->getNome();
+        $tipo = $cupom->getTipo();
+        $desconto = $cupom->getDesconto();
+    
+        $this->bancoDeDados->inserirCupom($nomeCupom, $tipo, $desconto);
+    }
     
 
     public function cadastrarCliente($cod, $nome, $sobrenome, $cpf, $dataNasc, $telefone, $email, $senha){
@@ -437,7 +454,7 @@ class Controlador{
                     "<td colspan='6'>".$detalhesVenda."</td>".
                 "</tr>";
         }
-    
+        
         $totalizadores = "<tr><td colspan='2'><strong>Total de Vendas: </strong>{$totalVendas}</td><td colspan='4'><strong>Valor Total: </strong>R$ ". number_format($totalValor, 2, ',', '.') ."</td></tr>";
     
         return $totalizadores . $relatorio;

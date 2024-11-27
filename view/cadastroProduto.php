@@ -9,6 +9,38 @@ include "layout/cabecalho.php";
     <div id="myModal" class="modal">
         <!-- Conteúdo do modal -->
         <div class="modal-content">
+        <div class="container mt-5">
+        <h2 class="text-center mb-4">Criar Cupom de Desconto</h2>
+        <form action="../processamento/processamentoCupom.php" method="POST" class="shadow p-4 rounded bg-light">
+            <!-- Nome do Cupom -->
+            <div class="mb-3">
+                <label for="nomeCupom" class="form-label">Nome do Cupom</label>
+                <input type="text" class="form-control" id="nomeCupom" name="nomeCupom" placeholder="Exemplo: BlackFriday2024" required>
+            </div>
+
+            <!-- Tipo de Cupom -->
+            <div class="mb-3">
+                <label for="tipoCupom" class="form-label">Tipo de Cupom</label>
+                <select class="form-select" id="tipoCupom" name="tipoCupom" required>
+                    <option value="" disabled selected>Selecione o tipo</option>
+                    <option value="BlackFriday">BlackFriday</option>
+                    <option value="Natal2024">Natal2024</option>
+                </select>
+            </div>
+
+            <!-- Valor do Desconto -->
+            <div class="mb-3">
+                <label for="desconto" class="form-label">Desconto</label>
+                <input type="number" class="form-control" id="desconto" name="desconto" placeholder="Digite o desconto (em % ou valor fixo)" required>
+                <small class="form-text text-muted">Para BlackFriday, o valor é percentual. Para Natal2024, é fixo (R$).</small>
+            </div>
+
+            <!-- Botão de Enviar -->
+            <div class="d-grid">
+                <button type="submit" name="criarCupom" class="btn btn-primary">Criar Cupom</button>
+            </div>
+        </form>
+    </div>
             <span class="close">&times;</span>
             <section class="conteudo-formulario-cadastro">
                 <form action="../processamento/processamento.php" method="POST" enctype="multipart/form-data">

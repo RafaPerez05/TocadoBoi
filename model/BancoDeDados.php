@@ -139,6 +139,19 @@ public function inserirProduto($produto) {
     }
 }
 
+public function inserirCupom($nomeCupom, $tipo, $desconto) {
+    $conexao = $this->conectarBD();
+
+    $sql = "INSERT INTO cupons (nome, tipo, desconto, status, data_expiracao) 
+            VALUES ('{$nomeCupom}', '{$tipo}', '{$desconto}', 'ativo', DATE_ADD(NOW(), INTERVAL 30 DAY))";
+
+    if (mysqli_query($conexao, $sql)) {
+        return true;
+    } else {
+        throw new Exception("Erro ao inserir cupom: " . mysqli_error($conexao));
+    }
+}
+
     
     public function inserirCliente($cliente){
         

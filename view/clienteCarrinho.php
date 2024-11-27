@@ -47,8 +47,11 @@ include "clienteLayout/cabecalho.php";
                     <div class="px-md-0 px-1" id="footer-font">
                         <b class="pl-md-4">TOTAL R$</b>
                         <input id="total"
-                            style="border: none; background: transparent; outline: none;text-align: center" readonly
-                            size="1" Value="0"></input>
+                            style="border: none; background: transparent; outline: none; text-align: center" 
+                            readonly 
+                            size="1" 
+                            value="0">
+                    </input>
                     </div>
                     <div>
                         <button class="btn btn-sm bg-dark text-white px-lg-5 px-3 openModal">CONTINUE</button>
@@ -133,6 +136,39 @@ var spanCad = document.getElementsByClassName("close")[0];
 var containerCarrinho = document.getElementById("zero-pad")
 var txtSemItens = document.getElementById("textoSemItens")
 
+document.getElementById('applyCoupon').addEventListener('click', function () {
+    const couponCode = document.getElementById('couponCode').value.trim();
+
+    if (!couponCode) {
+        alert('Por favor, insira um cupom válido.');
+        return;
+    }
+
+    // Simulação de validação e aplicação do desconto
+    if (couponCode === 'DESCONTO10') {
+        alert('Cupom aplicado com sucesso! 10% de desconto.');
+        aplicarDesconto(0.1); // Aplica 10% de desconto
+    } else {
+        alert('Cupom inválido ou expirado.');
+    }
+});
+
+function aplicarDesconto(percentual) {
+    const inputs = document.querySelectorAll('[id^="quantity"]');
+    let total = 0;
+
+    inputs.forEach(function (input) {
+        const valor = parseFloat(input.value);
+        total += valor;
+    });
+
+    const desconto = total * percentual;
+    const novoTotal = total - desconto;
+
+    document.getElementById('total').value = novoTotal.toFixed(2);
+}
+
+
 
 // Verificação para modalCad
 if (!modalCad) {
@@ -151,6 +187,7 @@ if (!spanCad) {
 // Esconder o modal de cadastro de endereço
 var codEndereco = document.getElementById("codEndereco");
 var modalCadEndereco = document.getElementsByClassName("form-endereco")[0];
+console.log("codigo de endereço:" + codEndereco.value)
 
 // Verificação para codEndereco
 if (!codEndereco) {
